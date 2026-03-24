@@ -110,14 +110,14 @@
                     </div>
                 </li>
 
-                <li class="nav-item d-none">
+                <li class="nav-item">
                     <a href="{{ route('contacts.index') }}" class="nav-link {{ Route::is('contacts.index') ? 'active' : '' }}">
                         <i class="ri-mail-open-line"></i>
                         <span>Contact Messages</span>
                     </a>
                 </li>
 
-                <li class="nav-item d-none">
+                <li class="nav-item">
                     <a href="{{ route('user.index') }}" class="nav-link {{ Route::is('user.index') ? 'active' : '' }}">
                         <i class="ri-user-3-line"></i>
                         <span>Customers</span>
@@ -140,7 +140,7 @@
                     );
                 @endphp
 
-                <li class="nav-item d-none">
+                <li class="nav-item">
                     <a class="nav-link menu-link {{ $settingsRoute ? 'active' : '' }}" 
                       href="#sidebarSettings" data-bs-toggle="collapse" role="button" 
                       aria-expanded="{{ $settingsRoute ? 'true' : 'false' }}" 

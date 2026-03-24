@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\MasterController;
+use App\Http\Controllers\Admin\MissionController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
@@ -85,5 +86,17 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/category-update', [CategoryController::class, 'update']);
     Route::delete('/category/{id}', [CategoryController::class, 'delete'])->name('category.delete');
     Route::post('/category-status', [CategoryController::class, 'toggleStatus']);
+
+    
+    // mission
+    Route::get('/mission', [MissionController::class, 'index'])->name('mission.index');
+    Route::post('/mission', [MissionController::class, 'store'])->name('mission.store');
+    Route::get('/mission/{id}/edit', [MissionController::class, 'edit'])->name('mission.edit');
+    Route::post('/mission-update', [MissionController::class, 'update'])->name('mission.update');
+    Route::delete('/mission/{id}', [MissionController::class, 'destroy'])->name('mission.delete');
+
+
+
+
 
 });
