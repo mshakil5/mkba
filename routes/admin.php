@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FAQController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MissionController;
 use App\Http\Controllers\Admin\SectionController;
@@ -101,6 +103,18 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::post('/event-update', [EventController::class, 'update'])->name('event.update');
     Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.delete');
+
+    Route::get('/activities', [ActivityController::class, 'index'])->name('activity.index');
+    Route::post('/activity-store', [ActivityController::class, 'store'])->name('activity.store');
+    Route::get('/activity/{id}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+    Route::post('/activity-update', [ActivityController::class, 'update'])->name('activity.update');
+    Route::delete('/activity/{id}', [ActivityController::class, 'destroy'])->name('activity.delete');
+
+    Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+    Route::post('/gallery-store', [GalleryController::class, 'store'])->name('gallery.store');
+    Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
+    Route::post('/gallery-update', [GalleryController::class, 'update'])->name('gallery.update');
+    Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.delete');
 
 
 
