@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MissionController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TimelineController;
 use App\Http\Controllers\Admin\TrusteeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
@@ -131,6 +133,16 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::delete('/blog/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
 
 
+    // About Content (Single Record)
+    Route::get('/about-edit', [AboutController::class, 'editAbout'])->name('admin.about.edit');
+    Route::post('/about-update', [AboutController::class, 'updateAbout'])->name('admin.about.update');
+
+    // Timeline CRUD
+    Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
+    Route::post('/timeline-store', [TimelineController::class, 'store'])->name('timeline.store');
+    Route::get('/timeline/{id}/edit', [TimelineController::class, 'edit'])->name('timeline.edit');
+    Route::post('/timeline-update', [TimelineController::class, 'update'])->name('timeline.update');
+    Route::delete('/timeline/{id}', [TimelineController::class, 'destroy'])->name('timeline.delete');
 
 
 
