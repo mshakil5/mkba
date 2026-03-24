@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use Illuminate\Http\Request;
 use App\Models\About;
 use App\Models\Timeline;
@@ -11,6 +12,12 @@ use App\Models\Blog;
 // Assuming you have these models from previous steps
 use App\Models\Event; 
 use App\Models\Activity;
+use App\Models\Contact;
+use Illuminate\Support\Facades\Mail;
+use App\Models\FaqQuestion;
+use Illuminate\Support\Facades\Cache;
+use App\Models\CompanyDetails;
+use App\Models\ContactEmail;
 
 class FrontendController extends Controller
 {
@@ -91,4 +98,35 @@ class FrontendController extends Controller
     {
         return view('frontend.contact');
     }
+
+
+    public function storeContact(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string|min:2|max:100',
+            'email'   => 'required|email|max:50',
+            'phone'   => ['required', 'regex:/^(?:\+44|0)(?:7\d{9}|1\d{9}|2\d{9}|3\d{9})$/'],
+            'company' => 'nullable|string|max:100',
+            'message' => 'required|string|max:2000',
+        ]);
+
+        $contact = new Contact();
+        $contact->name    = $request->input('name');
+        $contact->email   = $request->input('email');
+        $contact->phone   = $request->input('phone');
+        $contact->company = $request->input('company');
+        $contact->message = $request->input('message');
+        $contact->save();
+
+        $contactEmails = ContactEmail::where('status', 1)->pluck('email');
+
+        foreach ($contactEmails as $contactEmail) {
+            Mail::to($contactEmail)->send(new ContactMail($contact));
+        }
+
+        return back()->with('success', 'Your message has been sent successfully!');
+    }
+
+
+
 }
