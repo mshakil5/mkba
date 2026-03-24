@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MissionController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TrusteeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -115,6 +116,12 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/gallery-update', [GalleryController::class, 'update'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.delete');
+
+    Route::get('/trustees', [TrusteeController::class, 'index'])->name('trustee.index');
+    Route::post('/trustee-store', [TrusteeController::class, 'store'])->name('trustee.store');
+    Route::get('/trustee/{id}/edit', [TrusteeController::class, 'edit'])->name('trustee.edit');
+    Route::post('/trustee-update', [TrusteeController::class, 'update'])->name('trustee.update');
+    Route::delete('/trustee/{id}', [TrusteeController::class, 'destroy'])->name('trustee.delete');
 
 
 
