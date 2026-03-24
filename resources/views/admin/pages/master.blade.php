@@ -38,6 +38,8 @@
 
     <!-- Custom Css -->
     <link href="{{ asset('resources/backend/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+    
+
 </head>
 
 <body>
@@ -98,6 +100,22 @@
     <script src="{{ asset('resources/backend/js/custom.js') }}"></script>
 
     @yield('script')
+
+
+
+    <script>
+        $('.summernote').summernote({
+            height: 150,
+            placeholder: 'Write description...',
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ['view', ['codeview']]
+            ]
+        });
+    </script>
+
 </body>
 
 </html>

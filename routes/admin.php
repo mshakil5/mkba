@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MissionController;
@@ -95,6 +96,11 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/mission-update', [MissionController::class, 'update'])->name('mission.update');
     Route::delete('/mission/{id}', [MissionController::class, 'destroy'])->name('mission.delete');
 
+    Route::get('/events', [EventController::class, 'index'])->name('event.index');
+    Route::post('/event-store', [EventController::class, 'store'])->name('event.store');
+    Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
+    Route::post('/event-update', [EventController::class, 'update'])->name('event.update');
+    Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.delete');
 
 
 
