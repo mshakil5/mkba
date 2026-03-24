@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ActivityController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\ContactController;
@@ -122,6 +123,13 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::get('/trustee/{id}/edit', [TrusteeController::class, 'edit'])->name('trustee.edit');
     Route::post('/trustee-update', [TrusteeController::class, 'update'])->name('trustee.update');
     Route::delete('/trustee/{id}', [TrusteeController::class, 'destroy'])->name('trustee.delete');
+
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::post('/blog-store', [BlogController::class, 'store'])->name('blog.store');
+    Route::get('/blog/{id}/edit', [BlogController::class, 'edit'])->name('blog.edit');
+    Route::post('/blog-update', [BlogController::class, 'update'])->name('blog.update');
+    Route::delete('/blog/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
+
 
 
 
