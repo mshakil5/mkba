@@ -4,7 +4,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-logo mb-3">
                         <div class="bg-white p-2 rounded d-inline-block">
-                            <img src="https://via.placeholder.com/120x40/ffffff/00684a?text=MKBA+Logo" alt="MKBA" style="max-width: 120px;">
+                            <img src="{{ asset('images/company/' . $company->company_logo) }}" alt="MKBA" style="max-width: 120px;">
                         </div>
                     </div>
                     <p class="small opacity-75 lh-base">

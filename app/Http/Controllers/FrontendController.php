@@ -44,7 +44,7 @@ class FrontendController extends Controller
     public function gallery()
     {
         $images = Gallery::orderBy('order_by', 'asc')->get();
-        $categories = Gallery::select('category')->distinct()->get();
+        $categories = Gallery::select('category_id')->distinct()->get();
         return view('frontend.gallery', compact('images', 'categories'));
     }
 
