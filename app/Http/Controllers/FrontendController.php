@@ -71,9 +71,8 @@ class FrontendController extends Controller
     {
         $query = Event::whereNotNull('status');
 
-        // Filter by status (Upcoming, Ongoing, Past) if provided
         if ($request->has('status')) {
-            $query->where('status', $request->status); // assuming 'event_status' column name
+            $query->where('status', $request->status); 
         }
 
         $events = $query->latest()->paginate(9);
@@ -95,6 +94,7 @@ class FrontendController extends Controller
     public function activities()
     {
         $activities = Activity::latest()->get();
+
         return view('frontend.activities', compact('activities'));
     }
 
@@ -110,7 +110,7 @@ class FrontendController extends Controller
     public function blogDetail($slug)
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
-        // Fetching recent posts for sidebar
+        // dd($blog );
         $recentBlogs = Blog::where('slug', '!=', $slug)->latest()->take(5)->get();
         
         return view('frontend.blog_details', compact('blog', 'recentBlogs'));
