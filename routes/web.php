@@ -34,7 +34,7 @@ Route::get('/about', [FrontendController::class, 'about'])->name('frontend.about
 Route::get('/events', [FrontendController::class, 'events'])->name('frontend.events');
 Route::get('/activities', [FrontendController::class, 'activities'])->name('frontend.activities');
 Route::get('/blogs', [FrontendController::class, 'blogs'])->name('frontend.blogs');
-Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('frontend.blogDetail');
+Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog.details');
 Route::get('/event/{slug}', [FrontendController::class, 'eventDetail'])->name('events.show');
 Route::post('/contact', [FrontendController::class, 'storeContact'])->name('contact.store');
 

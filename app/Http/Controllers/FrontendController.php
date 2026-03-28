@@ -98,7 +98,8 @@ class FrontendController extends Controller
     // 8. Blogs List Page
     public function blogs()
     {
-        $blogs = Blog::where('status', 1)->latest()->paginate(9);
+        $blogs = Blog::where('status', 1)->latest()->get();
+        
         return view('frontend.blogs', compact('blogs'));
     }
 

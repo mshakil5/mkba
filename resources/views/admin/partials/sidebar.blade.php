@@ -146,6 +146,25 @@
                     </a>
                 </li>
 
+
+                
+                
+                <li class="nav-item">
+                    <a href="{{ route('blog.index') }}" class="nav-link {{ Route::is('blog.index') ? 'active' : '' }}">
+                        <i class="ri-user-3-line"></i>
+                        <span>Blogs</span>
+                    </a>
+                </li>
+
+                
+                
+                <li class="nav-item">
+                    <a href="{{ route('trustee.index') }}" class="nav-link {{ Route::is('trustee.index') ? 'active' : '' }}">
+                        <i class="ri-user-3-line"></i>
+                        <span>Trustee</span>
+                    </a>
+                </li>
+                
                 
                 
                 
