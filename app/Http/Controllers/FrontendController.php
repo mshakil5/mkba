@@ -62,6 +62,7 @@ class FrontendController extends Controller
     public function trustee()
     {
         $trustees = Trustee::orderBy('order_by', 'asc')->get();
+        
         return view('frontend.trustee', compact('trustees'));
     }
 
@@ -115,7 +116,9 @@ class FrontendController extends Controller
 
     public function contact()
     {
-        return view('frontend.contact');
+        
+        $company = CompanyDetails::select('company_name', 'fav_icon', 'google_site_verification', 'footer_content', 'facebook', 'twitter', 'linkedin', 'website', 'phone1', 'email1', 'address1','company_logo','copyright','google_map')->first();
+        return view('frontend.contact', compact('company'));
     }
 
 
@@ -124,13 +127,13 @@ class FrontendController extends Controller
         $request->validate([
             'name'    => 'required|string|min:2|max:100',
             'email'   => 'required|email|max:50',
-            'phone'   => ['required', 'regex:/^(?:\+44|0)(?:7\d{9}|1\d{9}|2\d{9}|3\d{9})$/'],
+            'phone' => 'required|string|min:8|max:20',
             'company' => 'nullable|string|max:100',
             'message' => 'required|string|max:2000',
         ]);
 
         $contact = new Contact();
-        $contact->name    = $request->input('name');
+        $contact->first_name    = $request->input('name');
         $contact->email   = $request->input('email');
         $contact->phone   = $request->input('phone');
         $contact->company = $request->input('company');
