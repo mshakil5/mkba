@@ -34,10 +34,6 @@ class FrontendController extends Controller
         $sliders = Slider::where('status', 1)->get();
         $missions = Mission::where('status', 1)->get();
 
-        // dd($activities);
-
-
-
         return view('frontend.index', compact('about', 'events', 'blogs', 'activities', 'sliders', 'missions'));
     }
 
@@ -46,6 +42,10 @@ class FrontendController extends Controller
     {
         $about = About::first();
         $timelines = Timeline::orderBy('order_by', 'asc')->get();
+
+        // dd($timelines);
+
+
         return view('frontend.about', compact('about', 'timelines'));
     }
 

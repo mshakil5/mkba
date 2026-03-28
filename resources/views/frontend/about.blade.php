@@ -3,11 +3,11 @@
 @section('content')
 
 
-
-    <section class="about-hero text-center text-white d-flex align-items-center" style="height: 350px; background: linear-gradient(rgba(0, 104, 74, 0.85), rgba(0, 104, 74, 0.85)), url('https://images.unsplash.com/photo-1517457373958-b7bdd0587d7b?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;">
+<section class="about-hero text-center text-white d-flex align-items-center" 
+         style="height: 350px; background: linear-gradient(rgba(0, 104, 74, 0.85), rgba(0, 104, 74, 0.85)), url('{{ asset($about->image) }}'); background-size: cover; background-position: center;">
     <div class="container">
-        <h1 class="fw-bold display-4">About Us</h1>
-        <p class="opacity-75 lead">Learn about our journey, mission, and the community we serve</p>
+        <h1 class="fw-bold display-4">{{ $about->title }}</h1>
+        <p class="opacity-75 lead">{{ $about->subtitle }}</p>
     </div>
 </section>
 
@@ -18,14 +18,12 @@
                 <span class="text-uppercase fw-bold" style="color: #f39c12; font-size: 0.8rem; letter-spacing: 2px;">WHO WE ARE</span>
                 <h2 class="fw-bold mb-4" style="color: #0a1d37; font-size: 2.5rem;">A Home Away From Home</h2>
                 <div class="text-muted lh-lg">
-                    <p>The Milton Keynes Bangladeshi Association (MKBA) is a registered community organisation dedicated to supporting and empowering the Bangladeshi diaspora in Milton Keynes and surrounding areas.</p>
-                    <p>We work tirelessly to preserve our rich cultural heritage while helping our community members integrate and thrive in British society. From cultural celebrations to educational support, welfare services to social events — MKBA is at the heart of community life.</p>
-                    <p>Our volunteers and trustees give their time generously, driven by a shared passion for building a stronger, more connected community for current and future generations.</p>
+                    {!! $about->description !!}
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="position-relative">
-                    <img src="https://images.unsplash.com/photo-1559027615-cd947c69994a?auto=format&fit=crop&w=800&q=80" alt="Volunteer" class="img-fluid rounded-4 shadow-lg">
+                    <img src="{{ asset($about->image) }}" alt="About MKBA" class="img-fluid rounded-4 shadow-lg">
                     <div class="position-absolute bottom-0 start-0 translate-middle-x bg-danger p-3 rounded-4 d-none d-md-block" style="width: 80px; height: 80px; z-index: -1;"></div>
                 </div>
             </div>
@@ -42,7 +40,7 @@
                         <i class="fa-solid fa-bullseye fs-4"></i>
                     </div>
                     <h5 class="fw-bold">Our Mission</h5>
-                    <p class="text-muted small">To promote the welfare and wellbeing of the Bangladeshi community in Milton Keynes through cultural, educational, and social programmes.</p>
+                    <p class="text-muted small">{{ $about->mission }}</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -51,7 +49,7 @@
                         <i class="fa-solid fa-eye fs-4"></i>
                     </div>
                     <h5 class="fw-bold">Our Vision</h5>
-                    <p class="text-muted small">A thriving, integrated Bangladeshi community that celebrates its heritage while contributing positively to the multicultural fabric of Milton Keynes.</p>
+                    <p class="text-muted small">{{ $about->vision }}</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -60,7 +58,7 @@
                         <i class="fa-solid fa-heart fs-4"></i>
                     </div>
                     <h5 class="fw-bold">Our Values</h5>
-                    <p class="text-muted small">Respect, inclusivity, compassion, and community spirit guide everything we do. We believe in the power of coming together.</p>
+                    <p class="text-muted small">{{ $about->values }}</p>
                 </div>
             </div>
         </div>
@@ -75,52 +73,21 @@
         </div>
 
         <div class="timeline-container mx-auto" style="max-width: 800px;">
-            <div class="timeline-item d-flex mb-5">
-                <div class="timeline-icon-wrap me-4">
-                    <div class="timeline-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                    <div class="timeline-line"></div>
+            @foreach($timelines as $timeline)
+                <div class="timeline-item d-flex mb-5">
+                    <div class="timeline-icon-wrap me-4">
+                        <div class="timeline-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                        @if(!$loop->last)
+                            <div class="timeline-line"></div>
+                        @endif
+                    </div>
+                    <div>
+                        <span class="timeline-label">{{ $timeline->label }}</span>
+                        <h5 class="fw-bold mb-2">{{ $timeline->title }}</h5>
+                        <p class="text-muted small mb-0">{{ $timeline->description }}</p>
+                    </div>
                 </div>
-                <div>
-                    <span class="timeline-label">Founded</span>
-                    <h5 class="fw-bold mb-2">Establishment</h5>
-                    <p class="text-muted small mb-0">MKBA was established to serve the growing Bangladeshi community in Milton Keynes.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item d-flex mb-5">
-                <div class="timeline-icon-wrap me-4">
-                    <div class="timeline-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                    <div class="timeline-line"></div>
-                </div>
-                <div>
-                    <span class="timeline-label">Growth</span>
-                    <h5 class="fw-bold mb-2">Community Programmes</h5>
-                    <p class="text-muted small mb-0">Launched educational programmes, language classes, and cultural events.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item d-flex mb-5">
-                <div class="timeline-icon-wrap me-4">
-                    <div class="timeline-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                    <div class="timeline-line"></div>
-                </div>
-                <div>
-                    <span class="timeline-label">Expansion</span>
-                    <h5 class="fw-bold mb-2">Wider Outreach</h5>
-                    <p class="text-muted small mb-0">Expanded services to include welfare support, youth programmes, and inter-faith dialogue.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item d-flex">
-                <div class="timeline-icon-wrap me-4">
-                    <div class="timeline-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                </div>
-                <div>
-                    <span class="timeline-label">Today</span>
-                    <h5 class="fw-bold mb-2">Thriving Community</h5>
-                    <p class="text-muted small mb-0">A thriving hub for over 2,000 community members with year-round activities and support.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
