@@ -11,7 +11,7 @@
                 <div class="footer-logo mb-3">
                     <div class="bg-white p-2 rounded d-inline-block">
                         {{-- Dynamic Logo --}}
-                        <img src="{{ asset('images/company/' . $company->company_logo) }}" alt="{{ $company->company_name }}" style="max-width: 120px;">
+                        <img src="{{ asset('uploads/company/' . $company->company_logo) }}" alt="{{ $company->company_name }}" style="max-width: 120px;">
                     </div>
                 </div>
                 {{-- Dynamic Footer Content/About --}}

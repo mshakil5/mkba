@@ -167,13 +167,20 @@
                 
                 
                 
+                <li class="nav-item">
+                    <a href="{{ route('activity.index') }}" class="nav-link {{ Route::is('activity.index') ? 'active' : '' }}">
+                        <i class="ri-user-3-line"></i>
+                        <span>Activity</span>
+                    </a>
+                </li>
+                
                 
 
                 @php
                     $settingsRoute = Route::is(
                         'admin.companyDetails',
                         'admin.company.seo-meta',
-                        'admin.aboutUs',
+                        'admin.about.edit',
                         'admin.privacy-policy',
                         'admin.terms-and-conditions',
                         'faq.index',
@@ -204,8 +211,8 @@
                                   class="nav-link {{ Route::is('admin.company.seo-meta') ? 'active' : '' }}">SEO</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.aboutUs') }}" 
-                                  class="nav-link {{ Route::is('admin.aboutUs') ? 'active' : '' }}">About Us</a>
+                                <a href="{{ route('admin.about.edit') }}" 
+                                  class="nav-link {{ Route::is('admin.about.edit') ? 'active' : '' }}">About Us</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.privacy-policy') }}" 

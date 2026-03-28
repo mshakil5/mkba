@@ -6,8 +6,8 @@
 <section class="about-hero text-center text-white d-flex align-items-center" 
          style="height: 350px; background: linear-gradient(rgba(0, 104, 74, 0.85), rgba(0, 104, 74, 0.85)), url('{{ asset($about->image) }}'); background-size: cover; background-position: center;">
     <div class="container">
-        <h1 class="fw-bold display-4">{{ $about->title }}</h1>
-        <p class="opacity-75 lead">{{ $about->subtitle }}</p>
+        <h1 class="fw-bold display-4">About US</h1>
+        <p class="opacity-75 lead"></p>
     </div>
 </section>
 
@@ -15,8 +15,8 @@
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
-                <span class="text-uppercase fw-bold" style="color: #f39c12; font-size: 0.8rem; letter-spacing: 2px;">WHO WE ARE</span>
-                <h2 class="fw-bold mb-4" style="color: #0a1d37; font-size: 2.5rem;">A Home Away From Home</h2>
+                <span class="text-uppercase fw-bold" style="color: #f39c12; font-size: 0.8rem; letter-spacing: 2px;">{{ $about->subtitle }}</span>
+                <h2 class="fw-bold mb-4" style="color: #0a1d37; font-size: 2.5rem;">{{ $about->title }}</h2>
                 <div class="text-muted lh-lg">
                     {!! $about->description !!}
                 </div>

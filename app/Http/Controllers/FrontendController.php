@@ -43,9 +43,6 @@ class FrontendController extends Controller
         $about = About::first();
         $timelines = Timeline::orderBy('order_by', 'asc')->get();
 
-        // dd($timelines);
-
-
         return view('frontend.about', compact('about', 'timelines'));
     }
 

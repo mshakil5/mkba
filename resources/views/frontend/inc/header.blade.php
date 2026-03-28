@@ -18,7 +18,7 @@
         <div class="container">
             <a class="navbar-brand" href="{{ route('home')}}">
                 <div class="d-flex align-items-center">
-                    <img src="{{ asset('images/company/' . $company->company_logo) }}" alt="Logo" class="me-2">
+                    <img src="{{ asset('uploads/company/' . $company->company_logo) }}" alt="Logo" class="me-2">
                     <div>
                         <strong class="d-block" style="line-height: 1; color: var(--primary-green);"> {{$company->company_name}}</strong>
                         <small style="font-size: 0.7rem; color: #555;"> {{$company->business_name}}</small>
