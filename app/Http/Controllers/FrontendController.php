@@ -18,6 +18,8 @@ use App\Models\FaqQuestion;
 use Illuminate\Support\Facades\Cache;
 use App\Models\CompanyDetails;
 use App\Models\ContactEmail;
+use App\Models\Mission;
+use App\Models\Slider;
 
 class FrontendController extends Controller
 {
@@ -25,11 +27,18 @@ class FrontendController extends Controller
     public function index()
     {
         $about = About::first();
-        $events = Event::where('status', 1)->latest()->take(3)->get();
+        $events = Event::latest()->take(3)->get();
         $blogs = Blog::where('status', 1)->latest()->take(3)->get();
         $activities = Activity::latest()->take(4)->get();
-        
-        return view('frontend.index', compact('about', 'events', 'blogs', 'activities'));
+
+        $sliders = Slider::where('status', 1)->get();
+        $missions = Mission::where('status', 1)->get();
+
+        // dd($events);
+
+
+
+        return view('frontend.index', compact('about', 'events', 'blogs', 'activities', 'sliders', 'missions'));
     }
 
     // 2. About Us Page

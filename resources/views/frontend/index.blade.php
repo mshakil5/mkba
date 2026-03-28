@@ -5,21 +5,30 @@
 
     <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            @foreach($sliders as $key => $slider)
+                <button type="button" 
+                        data-bs-target="#heroCarousel" 
+                        data-bs-slide-to="{{ $key }}" 
+                        class="{{ $loop->first ? 'active' : '' }}" 
+                        aria-current="{{ $loop->first ? 'true' : 'false' }}">
+                </button>
+            @endforeach
         </div>
+
         <div class="carousel-inner">
-            <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80');">
-                <div class="carousel-overlay"></div>
-            </div>
-            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80');">
-                <div class="carousel-overlay"></div>
-            </div>
-            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1600&q=80');">
-                <div class="carousel-overlay"></div>
-            </div>
+            @foreach($sliders as $slider)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }}" 
+                    style="background-image: url('{{ asset('uploads/slider/' . $slider->image) }}');">
+                    <div class="carousel-overlay"></div>
+                    
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ $slider->title }}</h5>
+                        <p>{{ $slider->sub_title }}</p>
+                    </div>
+                </div>
+            @endforeach
         </div>
+
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
@@ -39,46 +48,20 @@
             </div>
 
             <div class="row g-4 mt-5">
-                <div class="col-md-6 col-lg-3">
-                    <div class="mission-card text-start">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-globe"></i>
+                @foreach($missions as $mission)
+                    <div class="col-md-6 col-lg-3">
+                        <div class="mission-card text-start">
+                            <div class="icon-box">
+                                <i class="{{ $mission->icon }}"></i>
+                            </div>
+                            <h3 class="card-title">{{ $mission->title }}</h3>
+                            <p class="card-text">{{ $mission->description }}</p>
                         </div>
-                        <h3 class="card-title">Cultural Preservation</h3>
-                        <p class="card-text">Celebrating and preserving Bangladeshi heritage, language, and traditions in the UK.</p>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="mission-card text-start">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-book-open"></i>
-                        </div>
-                        <h3 class="card-title">Education & Learning</h3>
-                        <p class="card-text">Providing educational support, language classes, and mentorship programmes.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="mission-card text-start">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-heart"></i>
-                        </div>
-                        <h3 class="card-title">Community Welfare</h3>
-                        <p class="card-text">Supporting families with welfare services, advice, and community resources.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="mission-card text-start">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                        <h3 class="card-title">Social Integration</h3>
-                        <p class="card-text">Fostering harmony and integration within the wider Milton Keynes community.</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
-
 
     <section class="stats-section py-5" style="background-color: #00684a; color: white;">
         <div class="container py-4">
@@ -125,71 +108,39 @@
             </div>
 
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="event-card">
-                        <div class="position-relative overflow-hidden rounded-4 mb-3">
-                            <a href="event-details.html"> <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80" class="img-fluid event-img" alt="Cricket">
-                            </a>
-                            <div class="date-badge">
-                                <span class="day">20</span>
-                                <span class="month">MAY</span>
+                @foreach($events as $event)
+                    <div class="col-md-4">
+                        <div class="event-card">
+                            <div class="position-relative overflow-hidden rounded-4 mb-3">
+                                <a href="{{ route('events.show', $event->slug) }}"> 
+                                    <img src="{{ asset($event->image) }}" class="img-fluid event-img" alt="{{ $event->title }}">
+                                </a>
+                                <div class="date-badge">
+                                    <span class="day">{{ date('d', strtotime($event->event_date)) }}</span>
+                                    <span class="month text-uppercase">{{ date('M', strtotime($event->event_date)) }}</span>
+                                </div>
+                            </div>
+                            <h5 class="fw-bold mb-2">
+                                <a href="{{ route('events.show', $event->slug) }}" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">
+                                    {{ $event->title }}
+                                </a>
+                            </h5>
+                            <div class="event-meta">
+                                <p class="mb-1">
+                                    <i class="fa-regular fa-clock me-2"></i>
+                                    {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fa-solid fa-location-dot me-2"></i>{{ $event->location }}
+                                </p>
                             </div>
                         </div>
-                        <h5 class="fw-bold mb-2">
-                            <a href="event-details.html" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">Annual Cricket Tournament</a>
-                        </h5>
-                        <div class="event-meta">
-                            <p class="mb-1"><i class="fa-regular fa-clock me-2"></i>9:00 AM - 6:00 PM</p>
-                            <p class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Willen Lake Sports Ground</p>
-                        </div>
                     </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="event-card">
-                        <div class="position-relative overflow-hidden rounded-4 mb-3">
-                            <a href="event-details.html">
-                                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80" class="img-fluid event-img" alt="Festival">
-                            </a>
-                            <div class="date-badge">
-                                <span class="day">14</span>
-                                <span class="month">APR</span>
-                            </div>
-                        </div>
-                        <h5 class="fw-bold mb-2">
-                            <a href="event-details.html" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">Pohela Boishakh Celebration 2026</a>
-                        </h5>
-                        <div class="event-meta">
-                            <p class="mb-1"><i class="fa-regular fa-clock me-2"></i>12:00 PM - 8:00 PM</p>
-                            <p class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Campbell Park, Milton Keynes</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="event-card">
-                        <div class="position-relative overflow-hidden rounded-4 mb-3">
-                            <a href="event-details.html">
-                                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" class="img-fluid event-img" alt="Workshop">
-                            </a>
-                            <div class="date-badge">
-                                <span class="day">05</span>
-                                <span class="month">APR</span>
-                            </div>
-                        </div>
-                        <h5 class="fw-bold mb-2">
-                            <a href="event-details.html" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">Youth Education Workshop</a>
-                        </h5>
-                        <div class="event-meta">
-                            <p class="mb-1"><i class="fa-regular fa-clock me-2"></i>10:00 AM - 4:00 PM</p>
-                            <p class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>MK Library, Central Milton Keynes</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <div class="text-center mt-5">
-                <a href="event.html" class="btn btn-outline-success px-5 py-2 rounded-pill fw-bold" style="border-color: #00684a; color: #00684a;">
+                <a href="{{ route('frontend.events') }}" class="btn btn-outline-success px-5 py-2 rounded-pill fw-bold" style="border-color: #00684a; color: #00684a;">
                     View All Events <i class="fa-solid fa-arrow-right ms-2"></i>
                 </a>
             </div>

@@ -117,10 +117,27 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item d-none">
                     <a href="{{ route('user.index') }}" class="nav-link {{ Route::is('user.index') ? 'active' : '' }}">
                         <i class="ri-user-3-line"></i>
                         <span>Customers</span>
+                    </a>
+                </li>
+
+                
+
+                <li class="nav-item">
+                    <a href="{{ route('mission.index') }}" class="nav-link {{ Route::is('mission.index') ? 'active' : '' }}">
+                        <i class="ri-user-3-line"></i>
+                        <span>Our Mission</span>
+                    </a>
+                </li>
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('event.index') }}" class="nav-link {{ Route::is('event.index') ? 'active' : '' }}">
+                        <i class="ri-user-3-line"></i>
+                        <span>Events</span>
                     </a>
                 </li>
 
