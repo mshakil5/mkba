@@ -97,7 +97,7 @@
                       href="#sidebarAllProducts" data-bs-toggle="collapse" role="button"
                       aria-expanded="{{ $productActive ? 'true' : 'false' }}" 
                       aria-controls="sidebarAllProducts">
-                        <i class="ri-shopping-bag-3-line"></i> <span>Product Management</span>
+                        <i class="ri-shopping-bag-3-line"></i> <span>Gallery</span>
                     </a>
 
                     <div class="collapse menu-dropdown {{ $productActive ? 'show' : '' }}" id="sidebarAllProducts">
@@ -106,9 +106,14 @@
                                 <a href="{{ route('allcategory') }}" 
                                   class="nav-link {{ Route::is('allcategory') ? 'active' : '' }}">Category</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('gallery.index') }}" 
+                                  class="nav-link {{ Route::is('gallery.index') ? 'active' : '' }}">Gallery</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
+
 
                 <li class="nav-item">
                     <a href="{{ route('contacts.index') }}" class="nav-link {{ Route::is('contacts.index') ? 'active' : '' }}">
@@ -140,6 +145,10 @@
                         <span>Events</span>
                     </a>
                 </li>
+
+                
+                
+                
 
                 @php
                     $settingsRoute = Route::is(

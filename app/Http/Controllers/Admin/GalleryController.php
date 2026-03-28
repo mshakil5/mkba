@@ -13,7 +13,7 @@ class GalleryController extends Controller
 {
     public function index(Request $request) {
         if ($request->ajax()) {
-            $data = Gallery::orderBy('order_by', 'asc')->get();
+            $data = Gallery::with('category')->orderBy('order_by', 'asc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('image', function($row){
@@ -33,9 +33,9 @@ class GalleryController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate(['category' => 'required', 'image' => 'required|image']);
+        $request->validate(['category_id' => 'required', 'image' => 'required|image']);
         
-        $data = $request->only('title', 'category', 'order_by');
+        $data = $request->only('title', 'category_id', 'order_by');
         $data['created_by'] = auth()->id();
 
         if ($request->hasFile('image')) {
@@ -55,7 +55,7 @@ class GalleryController extends Controller
 
     public function update(Request $request) {
         $gallery = Gallery::findOrFail($request->id);
-        $data = $request->only('title', 'category', 'order_by');
+        $data = $request->only('title', 'category_id', 'order_by');
 
         if ($request->hasFile('image')) {
             if (File::exists(public_path($gallery->image))) File::delete(public_path($gallery->image));
