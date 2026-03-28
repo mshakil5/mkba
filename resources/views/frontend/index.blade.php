@@ -212,72 +212,55 @@
             </div>
 
             <div class="row g-4">
-                <div class="col-sm-6 col-lg-4">
-                    <div class="activity-card">
-                        <div class="img-container mb-3">
-                            <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80" alt="Sports">
-                            <span class="category-tag tag-sports"><i class="fa-solid fa-tag me-1"></i> sports</span>
-                            <div class="activity-date">
-                                <span class="d-block fw-bold fs-5">20</span>
-                                <span class="month-year">MAY 2026</span>
+                @foreach($activities as $activity)
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="activity-card">
+                            <div class="img-container mb-3">
+                                <img src="{{ asset($activity->image) }}" alt="{{ $activity->title }}">
+                                
+                                <span class="category-tag tag-{{ strtolower($activity->category) }}">
+                                    <i class="fa-solid fa-tag me-1"></i> {{ $activity->category }}
+                                </span>
+
+                                <div class="activity-date">
+                                    <span class="d-block fw-bold fs-5">
+                                        {{ date('d', strtotime($activity->activity_date)) }}
+                                    </span>
+                                    <span class="month-year">
+                                        {{ date('M Y', strtotime($activity->activity_date)) }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <h5 class="fw-bold mb-2">{{ $activity->title }}</h5>
+                            
+                            <p class="text-muted small mb-3">
+                                {{ Str::limit($activity->description, 100) }}
+                            </p>
+                            
+                            <div class="meta-info">
+                                <span>
+                                    <i class="fa-regular fa-calendar-check"></i> 
+                                    {{ $activity->time_range }}
+                                </span>
+                                <span>
+                                    <i class="fa-solid fa-location-dot"></i> 
+                                    {{ $activity->location }}
+                                </span>
                             </div>
                         </div>
-                        <h5 class="fw-bold mb-2">Annual Cricket Tournament</h5>
-                        <p class="text-muted small mb-3">Annual community cricket tournament — register your team now!</p>
-                        <div class="meta-info">
-                            <span><i class="fa-regular fa-calendar-check"></i> 9:00 AM - 6:00 PM</span>
-                            <span><i class="fa-solid fa-location-dot"></i> Willen Lake Sports Ground</span>
-                        </div>
                     </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-4">
-                    <div class="activity-card">
-                        <div class="img-container mb-3">
-                            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80" alt="Cultural">
-                            <span class="category-tag tag-cultural"><i class="fa-solid fa-tag me-1"></i> cultural</span>
-                            <div class="activity-date">
-                                <span class="d-block fw-bold fs-5">14</span>
-                                <span class="month-year">APR 2026</span>
-                            </div>
-                        </div>
-                        <h5 class="fw-bold mb-2">Pohela Boishakh Celebration 2026</h5>
-                        <p class="text-muted small mb-3">Celebrate the Bengali New Year with music, dance, food and family fun!</p>
-                        <div class="meta-info">
-                            <span><i class="fa-regular fa-calendar-check"></i> 12:00 PM - 8:00 PM</span>
-                            <span><i class="fa-solid fa-location-dot"></i> Campbell Park, Milton Keynes</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-lg-4">
-                    <div class="activity-card">
-                        <div class="img-container mb-3">
-                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" alt="Educational">
-                            <span class="category-tag tag-educational"><i class="fa-solid fa-tag me-1"></i> educational</span>
-                            <div class="activity-date">
-                                <span class="d-block fw-bold fs-5">05</span>
-                                <span class="month-year">APR 2026</span>
-                            </div>
-                        </div>
-                        <h5 class="fw-bold mb-2">Youth Education Workshop</h5>
-                        <p class="text-muted small mb-3">Education and career support workshop for young community members.</p>
-                        <div class="meta-info">
-                            <span><i class="fa-regular fa-calendar-check"></i> 10:00 AM - 4:00 PM</span>
-                            <span><i class="fa-solid fa-location-dot"></i> MK Library, Central Milton Keynes</span>
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
 
             <div class="text-center mt-5">
-                <a href="event.html" class="btn btn-view-all px-5 py-2 rounded-pill fw-bold">
+                <a href="{{ route('frontend.activities') }}" class="btn btn-view-all px-5 py-2 rounded-pill fw-bold">
                     View All Activities <i class="fa-solid fa-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
     </section>
+
 
     <style>
         /* Card Container & Images */
@@ -373,7 +356,7 @@
             <p class="mb-4 mx-auto opacity-90" style="max-width: 650px; font-size: 1.1rem;">
                 Be part of a vibrant community that celebrates culture, supports one another, and builds a stronger future together in Milton Keynes.
             </p>
-            <a href="contact.html" class="btn btn-danger px-4 py-2 rounded-pill fw-bold btn-cta-red">
+            <a href="{{ route('frontend.contact')}}" class="btn btn-danger px-4 py-2 rounded-pill fw-bold btn-cta-red">
                 Get in Touch <i class="fa-solid fa-arrow-right ms-2"></i>
             </a>
         </div>

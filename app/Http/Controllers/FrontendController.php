@@ -29,12 +29,12 @@ class FrontendController extends Controller
         $about = About::first();
         $events = Event::latest()->take(3)->get();
         $blogs = Blog::where('status', 1)->latest()->take(3)->get();
-        $activities = Activity::latest()->take(4)->get();
+        $activities = Activity::latest()->take(6)->get();
 
         $sliders = Slider::where('status', 1)->get();
         $missions = Mission::where('status', 1)->get();
 
-        // dd($events);
+        // dd($activities);
 
 
 
