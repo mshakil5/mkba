@@ -37,7 +37,7 @@
         </button>
     </div>
 
-    <section class="section-padding text-center bg-white">
+    <section class="section-padding text-center" style="background-color: #F8FAFC">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
@@ -100,7 +100,7 @@
 
 
     <!-- Events-->
-    <section class="section-padding bg-white">
+    <section class="section-padding  style="background-color: #F8FAFC">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT'S COMING</span>
@@ -203,7 +203,7 @@
 
 
     <!-- Activities -->
-    <section class="section-padding" style="background-color: #fcfdfd;">
+    <section class="section-padding" style="background-color: #F3F8F7;">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT WE DO</span>
