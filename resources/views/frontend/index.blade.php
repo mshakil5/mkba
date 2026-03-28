@@ -100,7 +100,7 @@
 
 
     <!-- Events-->
-    <section class="section-padding  style="background-color: #F8FAFC">
+    <section class="section-padding"  style="background-color: #F8FAFC">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT'S COMING</span>
