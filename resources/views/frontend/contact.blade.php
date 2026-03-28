@@ -229,8 +229,15 @@
                             </div>
 
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-send">
-                                    <i class="bi bi-send me-2"></i> Send Message
+                                <button type="submit" class="btn btn-send" id="submitBtn">
+                                    <span id="btnText">
+                                        <i class="bi bi-send me-2"></i> Send Message
+                                    </span>
+
+                                    <span id="btnSpinner" class="d-none">
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                        Sending...
+                                    </span>
                                 </button>
                             </div>
 
@@ -245,4 +252,25 @@
 
 
 
+@endsection
+
+
+@section('script')
+
+<script>
+    document.querySelector('form').addEventListener('submit', function () {
+
+        let btn = document.getElementById('submitBtn');
+        let text = document.getElementById('btnText');
+        let spinner = document.getElementById('btnSpinner');
+
+        // Disable button
+        btn.disabled = true;
+
+        // Toggle UI
+        text.classList.add('d-none');
+        spinner.classList.remove('d-none');
+    });
+</script>
+    
 @endsection

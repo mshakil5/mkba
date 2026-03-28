@@ -3,6 +3,144 @@
 @section('content')
 
 
+    <style>
+        :root {
+            --primary-green: #00684a;
+            --secondary-green: #004d36;
+            --accent-red: #ff4d4d;
+            --text-dark: #0a1d37;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            padding: 1rem 0;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-dark) !important;
+            margin: 0 10px;
+        }
+        .nav-link.active {
+            background-color: var(--primary-green);
+            color: #fff !important;
+            border-radius: 50px;
+            padding: 8px 20px !important;
+        }
+
+        /* --- Hero Banner --- */
+        .page-hero {
+            height: 300px;
+            background: linear-gradient(rgba(0, 50, 30, 0.85), rgba(0, 50, 30, 0.85)), 
+                        url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+
+
+        /* --- Event Cards --- */
+        .event-card {
+            border: none;
+            background: transparent;
+            transition: 0.3s ease;
+        }
+        .img-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 240px;
+        }
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .event-card:hover img { transform: scale(1.1); }
+
+        /* Date Badge */
+        .date-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 60px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .date-badge .day {
+            display: block;
+            font-weight: 800;
+            font-size: 1.2rem;
+            line-height: 1;
+            color: var(--primary-green);
+        }
+        .date-badge .month {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            text-transform: uppercase;
+        }
+
+        /* Category Tags */
+        .cat-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 4px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        .cat-tag i { font-size: 0.7rem; margin-right: 5px; }
+        
+        .tag-sports { background: #fef3e7; color: #b45309; }
+        .tag-cultural { background: #f3e8ff; color: #7e22ce; }
+        .tag-educational { background: #dbeafe; color: #1d4ed8; }
+        .tag-religious { background: #d1fae5; color: #047857; }
+
+        /* Event Details */
+        .event-title {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            color: var(--text-dark);
+        }
+        .event-meta {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        .event-meta i {
+            color: var(--primary-green);
+            margin-right: 8px;
+            width: 14px;
+        }
+
+        /* --- Responsive Tweaks --- */
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2.5rem; }
+            .filter-btn { padding: 6px 15px; font-size: 0.8rem; }
+        }
+    </style>
+
 <style>
     /* Filter Container Styling */
     .filter-btn {
@@ -28,29 +166,6 @@
         shadow: 0 4px 10px rgba(0, 104, 74, 0.2);
     }
 
-    /* Event Card Hover Effect */
-    .event-card {
-        transition: transform 0.3s ease;
-    }
-    .event-card:hover {
-        transform: translateY(-5px);
-    }
-
-    /* Status Badge inside Image */
-    .status-badge {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        padding: 5px 12px;
-        border-radius: 50px;
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        z-index: 10;
-    }
-    .bg-upcoming { background-color: #f39c12; color: white; }
-    .bg-past { background-color: #94a3b8; color: white; }
-    .bg-ongoing { background-color: #2ecc71; color: white; }
 
 
 </style>

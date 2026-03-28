@@ -86,6 +86,8 @@ class FrontendController extends Controller
     {
         $event = Event::where('slug', $slug)->firstOrFail();
         $relatedEvents = Event::where('slug', '!=', $slug)->latest()->take(3)->get();
+
+        
         return view('frontend.event_details', compact('event', 'relatedEvents'));
     }
 
