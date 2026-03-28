@@ -3,6 +3,58 @@
 @section('content')
 
 
+<style>
+    /* Filter Container Styling */
+    .filter-btn {
+        border: none;
+        background: transparent;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #64748b;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .filter-btn:hover {
+        color: #00684a;
+        background: rgba(0, 104, 74, 0.05);
+    }
+
+    .filter-btn.active {
+        background: #00684a;
+        color: #ffffff !important;
+        shadow: 0 4px 10px rgba(0, 104, 74, 0.2);
+    }
+
+    /* Event Card Hover Effect */
+    .event-card {
+        transition: transform 0.3s ease;
+    }
+    .event-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Status Badge inside Image */
+    .status-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        z-index: 10;
+    }
+    .bg-upcoming { background-color: #f39c12; color: white; }
+    .bg-past { background-color: #94a3b8; color: white; }
+    .bg-ongoing { background-color: #2ecc71; color: white; }
+
+
+</style>
+
 
     <section class="page-hero">
         <div class="container">
@@ -15,79 +67,54 @@
         <div class="container">
             <div class="filter-container text-center">
                 <div class="d-inline-flex bg-light p-2 rounded-3 shadow-sm">
-                    <button class="filter-btn active">All</button>
-                    <button class="filter-btn">Upcoming</button>
-                    <button class="filter-btn">Ongoing</button>
-                    <button class="filter-btn">Past</button>
+                    {{-- Note: For these filters to work, you'd need to pass a 'status' query param in the URL --}}
+                    <a href="{{ route('frontend.events') }}" class="filter-btn {{ !request('status') ? 'active' : '' }}">All</a>
+                    <a href="{{ route('frontend.events', ['status' => 'Upcoming']) }}" class="filter-btn {{ request('status') == 'Upcoming' ? 'active' : '' }}">Upcoming</a>
+                    <a href="{{ route('frontend.events', ['status' => 'Ongoing']) }}" class="filter-btn {{ request('status') == 'Ongoing' ? 'active' : '' }}">Ongoing</a>
+                    <a href="{{ route('frontend.events', ['status' => 'Past']) }}" class="filter-btn {{ request('status') == 'Past' ? 'active' : '' }}">Past</a>
                 </div>
             </div>
 
             <div class="row g-4 mt-2">
-                <div class="col-md-4">
-                    <div class="event-card">
-                        <div class="position-relative overflow-hidden rounded-4 mb-3">
-                            <a href="event-details.html"> <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80" class="img-fluid event-img" alt="Cricket">
-                            </a>
-                            <div class="date-badge">
-                                <span class="day">20</span>
-                                <span class="month">MAY</span>
+                @forelse($events as $event)
+                    <div class="col-md-4">
+                        <div class="event-card">
+                            <div class="position-relative overflow-hidden rounded-4 mb-3">
+                                <a href="{{ route('events.show', $event->slug) }}"> 
+                                    <img src="{{ asset($event->image) }}" class="img-fluid event-img" alt="{{ $event->title }}">
+                                </a>
+                                <div class="date-badge">
+                                    <span class="day">{{ date('d', strtotime($event->event_date)) }}</span>
+                                    <span class="month text-uppercase">{{ date('M', strtotime($event->event_date)) }}</span>
+                                </div>
+                            </div>
+                            <h5 class="fw-bold mb-2">
+                                <a href="{{ route('events.show', $event->slug) }}" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">
+                                    {{ $event->title }}
+                                </a>
+                            </h5>
+                            <div class="event-meta">
+                                <p class="mb-1">
+                                    <i class="fa-regular fa-clock me-2"></i>
+                                    {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fa-solid fa-location-dot me-2"></i>{{ $event->location }}
+                                </p>
                             </div>
                         </div>
-                        <h5 class="fw-bold mb-2">
-                            <a href="event-details.html" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">Annual Cricket Tournament</a>
-                        </h5>
-                        <div class="event-meta">
-                            <p class="mb-1"><i class="fa-regular fa-clock me-2"></i>9:00 AM - 6:00 PM</p>
-                            <p class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Willen Lake Sports Ground</p>
-                        </div>
                     </div>
-                </div>
+                @empty
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted">No events found matching your criteria.</p>
+                    </div>
+                @endforelse
+            </div>
 
-                <div class="col-md-4">
-                    <div class="event-card">
-                        <div class="position-relative overflow-hidden rounded-4 mb-3">
-                            <a href="event-details.html">
-                                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80" class="img-fluid event-img" alt="Festival">
-                            </a>
-                            <div class="date-badge">
-                                <span class="day">14</span>
-                                <span class="month">APR</span>
-                            </div>
-                        </div>
-                        <h5 class="fw-bold mb-2">
-                            <a href="event-details.html" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">Pohela Boishakh Celebration 2026</a>
-                        </h5>
-                        <div class="event-meta">
-                            <p class="mb-1"><i class="fa-regular fa-clock me-2"></i>12:00 PM - 8:00 PM</p>
-                            <p class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Campbell Park, Milton Keynes</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="event-card">
-                        <div class="position-relative overflow-hidden rounded-4 mb-3">
-                            <a href="event-details.html">
-                                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" class="img-fluid event-img" alt="Workshop">
-                            </a>
-                            <div class="date-badge">
-                                <span class="day">05</span>
-                                <span class="month">APR</span>
-                            </div>
-                        </div>
-                        <h5 class="fw-bold mb-2">
-                            <a href="event-details.html" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">Youth Education Workshop</a>
-                        </h5>
-                        <div class="event-meta">
-                            <p class="mb-1"><i class="fa-regular fa-clock me-2"></i>10:00 AM - 4:00 PM</p>
-                            <p class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>MK Library, Central Milton Keynes</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center mt-5">
+                {{ $events->appends(request()->query())->links() }}
             </div>
         </div>
     </section>
-
-
 
 @endsection

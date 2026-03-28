@@ -65,9 +65,17 @@ class FrontendController extends Controller
     }
 
     // 5. Events List Page
-    public function events()
+    public function events(Request $request)
     {
-        $events = Event::where('status', 1)->latest()->paginate(9);
+        $query = Event::whereNotNull('status');
+
+        // Filter by status (Upcoming, Ongoing, Past) if provided
+        if ($request->has('status')) {
+            $query->where('status', $request->status); // assuming 'event_status' column name
+        }
+
+        $events = $query->latest()->paginate(9);
+
         return view('frontend.events', compact('events'));
     }
 
