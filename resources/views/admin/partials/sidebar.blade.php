@@ -92,7 +92,7 @@
                     );
                 @endphp
 
-                <li class="nav-item">
+                <li class="nav-item d-none">
                     <a class="nav-link menu-link {{ $productActive ? 'active' : '' }}" 
                       href="#sidebarAllProducts" data-bs-toggle="collapse" role="button"
                       aria-expanded="{{ $productActive ? 'true' : 'false' }}" 
@@ -103,15 +103,19 @@
                     <div class="collapse menu-dropdown {{ $productActive ? 'show' : '' }}" id="sidebarAllProducts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('allcategory') }}" 
-                                  class="nav-link {{ Route::is('allcategory') ? 'active' : '' }}">Category</a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('gallery.index') }}" 
                                   class="nav-link {{ Route::is('gallery.index') ? 'active' : '' }}">Gallery</a>
                             </li>
                         </ul>
                     </div>
+                </li>
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('gallery.index') }}" class="nav-link {{ Route::is('gallery.index') ? 'active' : '' }}">
+                        <i class="ri-mail-open-line"></i>
+                        <span>Gallery</span>
+                    </a>
                 </li>
 
 
