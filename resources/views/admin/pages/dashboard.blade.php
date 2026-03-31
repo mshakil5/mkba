@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <div class="row">
+            <div class="row d-none">
                 <div class="col-xl-3 col-md-6">
                     <!-- card -->
                     <div class="card card-animate">

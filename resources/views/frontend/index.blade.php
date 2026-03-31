@@ -242,7 +242,7 @@
             <div class="row g-4">
                 @foreach($activities as $activity)
                     <div class="col-sm-6 col-lg-4">
-                        <div class="activity-card">
+                        <div class="activity-card" onclick="window.location='{{ route('activity.show', $activity->slug) }}'">
                             <div class="img-container mb-3">
                                 <img src="{{ asset($activity->image) }}" alt="{{ $activity->title }}">
                                 

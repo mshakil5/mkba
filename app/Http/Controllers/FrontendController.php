@@ -149,5 +149,11 @@ class FrontendController extends Controller
     }
 
 
+    public function activityDetail($slug)
+    {
+        $activity = Activity::where('slug', $slug)->firstOrFail();
+        return view('frontend.activity-detail', compact('activity'));
+    }
+
 
 }

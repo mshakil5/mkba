@@ -8,6 +8,7 @@ use App\Models\Activity;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ActivityController extends Controller
 {
@@ -61,6 +62,7 @@ class ActivityController extends Controller
             $mImage->move(public_path('uploads/activities/meta'), $mImageName);
             $data['meta_image'] = 'uploads/activities/meta/' . $mImageName;
         }
+        $data['slug'] = Str::slug($request->title);
 
         Activity::create($data);
         return response()->json(['message' => 'Activity created successfully.'], 201);
@@ -71,6 +73,7 @@ class ActivityController extends Controller
         
         $data = $request->all();
         $data['updated_by'] = auth()->id();
+        $data['slug'] = Str::slug($request->title);
 
         // Update Main Image
         if ($request->hasFile('image')) {
