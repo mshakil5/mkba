@@ -1,5 +1,12 @@
 @extends('frontend.layouts.master')
 
+@section('title', $banner->meta_title ?? 'Gallery')
+
+@section('meta')
+<meta name="title" content="{{ $banner->meta_title ?? 'Gallery' }}">
+<meta name="description" content="{{ $banner->meta_description ?? 'Browse through our photo gallery' }}">
+<meta name="keywords" content="{{ $banner->meta_keywords ?? 'gallery, photos, images' }}">
+
 @section('content')
 
 <style>
@@ -10,7 +17,7 @@
     }
 
     /* ── Hero ───────────────────────────────── */
-    .gallery-hero {
+    /* .gallery-hero {
         height: 300px;
         background: linear-gradient(rgba(0,50,30,0.82), rgba(0,50,30,0.82)),
                     url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1600&q=80');
@@ -20,7 +27,13 @@
         align-items: center;
         justify-content: center;
         color: #fff;
-    }
+    } */
+
+        .gallery-hero {
+            padding: 100px 0;
+            color: white;
+            text-align: center;
+        }
 
     /* ── Layout ─────────────────────────────── */
     .gallery-wrap {
@@ -283,10 +296,10 @@
 
 
 {{-- ── Hero ──────────────────────────────────────── --}}
-<section class="gallery-hero text-center">
+<section class="gallery-hero text-center" style="background: linear-gradient(rgba(10, 58, 45, 0.9), rgba(10, 58, 45, 0.9)), url('{{ $banner->image ? asset($banner->image) : "https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&q=80&w=2000" }}'); background-size: cover; background-position: center;">
     <div class="container">
-        <h1 class="display-4 fw-bold mb-2">Our Gallery</h1>
-        <p class="opacity-75 lead">Capturing beautiful moments from our community events</p>
+        <h1>{{ $banner->long_title ?? 'Gallery' }}</h1>
+        <p>{{ $banner->short_description ?? 'Browse through our photo gallery.' }}</p>
     </div>
 </section>
 

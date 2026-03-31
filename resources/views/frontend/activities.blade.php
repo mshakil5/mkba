@@ -1,16 +1,29 @@
 @extends('frontend.layouts.master')
 
+@section('title', $banner->meta_title ?? 'Our Activities')
+
+@section('meta')
+<meta name="title" content="{{ $banner->meta_title ?? 'Our Activities' }}">
+<meta name="description" content="{{ $banner->meta_description ?? 'Explore our diverse community activities and programs' }}">
+<meta name="keywords" content="{{ $banner->meta_keywords ?? 'activities, community, programs, workshops' }}">
+@endsection
+
 @section('content')
 
-
-
+    <section class="page-hero text-white text-center d-flex align-items-center" 
+         style="height: 350px; background: linear-gradient(rgba(10, 58, 45, 0.9), rgba(10, 58, 45, 0.9)), url('{{ $banner->image ? asset($banner->image) : "https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&q=80&w=2000" }}'); background-size: cover; background-position: center;">
+        <div class="container">
+            <h1 class="fw-bold display-4">{{ $banner->long_title ?? 'Our Activities' }}</h1>
+            <p class="opacity-75 lead">{{ $banner->short_description ?? 'Explore what we do to bring our community together.' }}</p>
+        </div>
+    </section>
 
     <section class="section-padding" style="background-color: #fcfdfd; padding: 80px 0;">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT WE DO</span>
-                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Our Activities</h2>
-                <p class="text-muted mx-auto" style="max-width: 600px;">From cultural celebrations to educational workshops, we organize diverse activities that bring our community together.</p>
+                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">{{ $banner->short_title ?? 'WHAT WE DO' }}</span>
+                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">{{ $banner->name ?? 'Our Activities' }}</h2>
+                <p class="text-muted mx-auto" style="max-width: 600px;">{{ $banner->long_description ?? 'From cultural celebrations to educational workshops, we organize diverse activities that bring our community together.' }}</p>
             </div>
 
             <div class="row g-4">

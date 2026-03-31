@@ -1,10 +1,13 @@
 @extends('frontend.layouts.master')
-@section('title', 'Contact Us')
+@section('title', $banner->meta_title ?? 'Contact Us')
 
 @section('meta')
-<meta name="title" content="Contact Us">
-<meta name="description" content="Get in touch with us for any queries or support">
-<meta name="keywords" content="contact, support, help">
+<meta name="title" content="{{ $banner->meta_title ?? 'Contact Us' }}">
+<meta name="description" content="{{ $banner->meta_description ?? 'Get in touch with us for any queries or support' }}">
+<meta name="keywords" content="{{ $banner->meta_keywords ?? 'contact, support, help' }}">
+@if($banner->meta_image)
+<meta property="og:image" content="{{ asset($banner->meta_image) }}">
+@endif
 @endsection
 
 @section('content')
@@ -19,10 +22,6 @@
 
         /* Hero Section */
         .contact-hero {
-            background: linear-gradient(rgba(10, 58, 45, 0.9), rgba(10, 58, 45, 0.9)), 
-                        url('https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
             padding: 100px 0;
             color: white;
             text-align: center;
@@ -135,10 +134,10 @@
         }
     </style>
 
-    <header class="contact-hero">
+    <header class="contact-hero" style="background: linear-gradient(rgba(10, 58, 45, 0.9), rgba(10, 58, 45, 0.9)), url('{{ $banner->image ? asset($banner->image) : "https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&q=80&w=2000" }}'); background-size: cover; background-position: center;">
         <div class="container">
-            <h1>Contact Us</h1>
-            <p>We'd love to hear from you. Get in touch with MKBA.</p>
+            <h1>{{ $banner->long_title ?? 'Contact Us' }}</h1>
+            <p>{{ $banner->short_description ?? "We'd love to hear from you. Get in touch with MKBA." }}</p>
         </div>
     </header>
 
@@ -147,9 +146,9 @@
             
             <div class="col-lg-5 pe-lg-5">
                 <span class="label-orange">REACH OUT</span>
-                <h2 class="section-title h1">Get in Touch</h2>
+                <h2 class="section-title h1">{{ $banner->short_title ?? 'Get in Touch' }}</h2>
                 <p class="contact-desc">
-                    Whether you have a question, want to volunteer, or need support — we're here for you. Reach out and a member of our team will get back to you shortly.
+                    {{ $banner->long_description ?? 'Whether you have a question, want to volunteer, or need support — we\'re here for you. Reach out and a member of our team will get back to you shortly.' }}
                 </p>
 
                 <div class="contact-item">
@@ -187,7 +186,6 @@
 
             <div class="col-lg-7">
                 <div class="form-card">
-
 
                     @if(session('success'))
                         <div class="alert alert-success">
@@ -233,7 +231,6 @@
                                     <span id="btnText">
                                         <i class="bi bi-send me-2"></i> Send Message
                                     </span>
-
                                     <span id="btnSpinner" class="d-none">
                                         <span class="spinner-border spinner-border-sm me-2"></span>
                                         Sending...
@@ -249,28 +246,18 @@
         </div>
     </main>
 
-
-
-
 @endsection
 
-
 @section('script')
-
 <script>
     document.querySelector('form').addEventListener('submit', function () {
-
         let btn = document.getElementById('submitBtn');
         let text = document.getElementById('btnText');
         let spinner = document.getElementById('btnSpinner');
 
-        // Disable button
         btn.disabled = true;
-
-        // Toggle UI
         text.classList.add('d-none');
         spinner.classList.remove('d-none');
     });
 </script>
-    
 @endsection

@@ -1,6 +1,26 @@
 @extends('frontend.layouts.master')
 
+@section('title', $banner->meta_title ?? 'Events')
+
+@section('meta')
+<meta name="title" content="{{ $banner->meta_title ?? 'Events' }}">
+<meta name="description" content="{{ $banner->meta_description ?? 'Join us at our community events and celebrations' }}">
+<meta name="keywords" content="{{ $banner->meta_keywords ?? 'events, community, celebrations' }}">
+@endsection
+
 @section('content')
+
+    <section class="page-hero" style="background: linear-gradient(rgba(10, 58, 45, 0.9), rgba(10, 58, 45, 0.9)), url('{{ $banner->image ? asset($banner->image) : "https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&q=80&w=2000" }}'); background-size: cover; background-position: center;">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-2">{{ $banner->long_title ?? 'Events' }}</h1>
+            <p class="opacity-75 lead">{{ $banner->short_description ?? 'Join us at our community events and celebrations' }}</p>
+        </div>
+    </section>
+
+    {{-- Rest of your events content here --}}
+
+@endsection
+
 
 
     <style>
@@ -171,12 +191,6 @@
 </style>
 
 
-    <section class="page-hero">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-2">Events</h1>
-            <p class="opacity-75 lead">Join us at our community events and celebrations</p>
-        </div>
-    </section>
 
     <section class="pb-5 pt-4">
         <div class="container">

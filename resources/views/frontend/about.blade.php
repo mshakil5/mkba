@@ -1,13 +1,20 @@
 @extends('frontend.layouts.master')
 
+@section('title', $banner->meta_title ?? 'About Us')
+
+@section('meta')
+<meta name="title" content="{{ $banner->meta_title ?? 'About Us' }}">
+<meta name="description" content="{{ $banner->meta_description ?? 'Learn more about our organization' }}">
+<meta name="keywords" content="{{ $banner->meta_keywords ?? 'about, mission, vision' }}">
+@endsection
+
 @section('content')
 
-
 <section class="about-hero text-center text-white d-flex align-items-center" 
-         style="height: 350px; background: linear-gradient(rgba(0, 104, 74, 0.85), rgba(0, 104, 74, 0.85)), url('{{ asset($about->image) }}'); background-size: cover; background-position: center;">
+         style="height: 350px; background: linear-gradient(rgba(0, 104, 74, 0.85), rgba(0, 104, 74, 0.85)), url('{{ $banner->image ? asset($banner->image) : asset($about->image) }}'); background-size: cover; background-position: center;">
     <div class="container">
-        <h1 class="fw-bold display-4">About US</h1>
-        <p class="opacity-75 lead"></p>
+        <h1 class="fw-bold display-4">{{ $banner->long_title ?? 'About Us' }}</h1>
+        <p class="opacity-75 lead">{{ $banner->short_description ?? '' }}</p>
     </div>
 </section>
 

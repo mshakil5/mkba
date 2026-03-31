@@ -192,6 +192,7 @@
                         'sections.index',
                         'timeline.index',
                         'allslider',
+                        'banner-section.index',
                         'admin.home-footer',
                         'admin.copyright'
                     );
@@ -250,6 +251,10 @@
                             <li class="nav-item">
                                 <a href="{{ route('faq.index') }}" 
                                   class="nav-link {{ Route::is('faq.index') ? 'active' : '' }}">FAQ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('banner-section.index') }}" 
+                                  class="nav-link {{ Route::is('banner-section.index') ? 'active' : '' }}">Banner</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('allslider') }}" 

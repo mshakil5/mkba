@@ -1,6 +1,68 @@
 @extends('frontend.layouts.master')
 
+@section('title', $banner->meta_title ?? 'Blog')
+
+@section('meta')
+<meta name="title" content="{{ $banner->meta_title ?? 'Blog' }}">
+<meta name="description" content="{{ $banner->meta_description ?? 'News, stories, and updates from our community' }}">
+<meta name="keywords" content="{{ $banner->meta_keywords ?? 'blog, news, stories, updates' }}">
+@endsection
+
 @section('content')
+
+    <header class="blog-hero" style="background: linear-gradient(rgba(10, 58, 45, 0.9), rgba(10, 58, 45, 0.9)), url('{{ $banner->image ? asset($banner->image) : "https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&q=80&w=2000" }}'); background-size: cover; background-position: center;">
+        <div class="container">
+            <h1>{{ $banner->long_title ?? 'Blog' }}</h1>
+            <p>{{ $banner->short_description ?? 'News, stories, and updates from our community' }}</p>
+        </div>
+    </header>
+
+    <main class="container my-5 py-4">
+        
+        <div class="row g-4">
+            @foreach($blogs as $blog)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card blog-card h-100">
+
+                        <a href="{{ route('blog.details', $blog->slug) }}">
+                            <img src="{{ asset($blog->image) }}" 
+                                class="card-img-top" 
+                                alt="{{ $blog->title }}">
+                        </a>
+
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <span class="badge-custom bg-community">
+                                    {{ $blog->category }}
+                                </span>
+
+                                <span class="post-date">
+                                    {{ \Carbon\Carbon::parse($blog->post_date)->format('d M Y') }}
+                                </span>
+                            </div>
+
+                            <h5 class="card-title">
+                                <a href="{{ route('blog.details', $blog->slug) }}" 
+                                class="text-decoration-none text-dark hover-link">
+                                    {{ $blog->title }}
+                                </a>
+                            </h5>
+
+                            <p class="card-text">
+                                {{ $blog->summary }}
+                            </p>
+
+                            <div class="author-info">
+                                <i class="bi bi-person"></i> {{ $blog->author }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+    </main>
 
     <style>
         body {
@@ -11,10 +73,6 @@
 
         /* Hero Section */
         .blog-hero {
-            background: linear-gradient(rgba(10, 58, 45, 0.85), rgba(10, 58, 45, 0.85)), 
-                        url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
             padding: 100px 0;
             color: white;
             text-align: center;
@@ -123,63 +181,6 @@
 
 
     </style>
-
-
-
-    <header class="blog-hero">
-        <div class="container">
-            <h1>Blog</h1>
-            <p>News, stories, and updates from our community</p>
-        </div>
-    </header>
-
-    <main class="container my-5 py-4">
-        
-        <div class="row g-4">
-            @foreach($blogs as $blog)
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card blog-card h-100">
-
-                        <a href="{{ route('blog.details', $blog->slug) }}">
-                            <img src="{{ asset($blog->image) }}" 
-                                class="card-img-top" 
-                                alt="{{ $blog->title }}">
-                        </a>
-
-                        <div class="card-body">
-                            <div class="mb-2">
-                                <span class="badge-custom bg-community">
-                                    {{ $blog->category }}
-                                </span>
-
-                                <span class="post-date">
-                                    {{ \Carbon\Carbon::parse($blog->post_date)->format('d M Y') }}
-                                </span>
-                            </div>
-
-                            <h5 class="card-title">
-                                <a href="{{ route('blog.details', $blog->slug) }}" 
-                                class="text-decoration-none text-dark hover-link">
-                                    {{ $blog->title }}
-                                </a>
-                            </h5>
-
-                            <p class="card-text">
-                                {{ $blog->summary }}
-                            </p>
-
-                            <div class="author-info">
-                                <i class="bi bi-person"></i> {{ $blog->author }}
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-    </main>
-
 
 
 

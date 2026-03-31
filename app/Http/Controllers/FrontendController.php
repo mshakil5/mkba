@@ -12,6 +12,7 @@ use App\Models\Blog;
 // Assuming you have these models from previous steps
 use App\Models\Event; 
 use App\Models\Activity;
+use App\Models\BannerSection;
 use App\Models\Category;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
@@ -43,13 +44,15 @@ class FrontendController extends Controller
     {
         $about = About::first();
         $timelines = Timeline::orderBy('order_by', 'asc')->get();
+        $banner = BannerSection::where('page', 'About')->first() ?? new BannerSection();
 
-        return view('frontend.about', compact('about', 'timelines'));
+        return view('frontend.about', compact('about', 'timelines' , 'banner'));
     }
 
     // 3. Gallery Page
     public function gallery()
     {
+        $banner = BannerSection::where('page', 'Gallery')->first() ?? new BannerSection();
         $albums = Category::withCount('galleries')
                     ->has('galleries')
                     ->with(['galleries' => function($q) {
@@ -58,15 +61,16 @@ class FrontendController extends Controller
                     ->orderBy('order_by', 'asc')
                     ->get();
 
-        return view('frontend.gallery', compact('albums'));
+        return view('frontend.gallery', compact('albums', 'banner'));
     }
 
     // 4. Trustee Page
     public function trustee()
     {
+        $banner = BannerSection::where('page', 'Trustee')->first() ?? new BannerSection();
         $trustees = Trustee::orderBy('order_by', 'asc')->get();
         
-        return view('frontend.trustee', compact('trustees'));
+        return view('frontend.trustee', compact('trustees', 'banner'));
     }
 
     // 5. Events List Page
@@ -80,7 +84,9 @@ class FrontendController extends Controller
 
         $events = $query->latest()->paginate(9);
 
-        return view('frontend.events', compact('events'));
+        $banner = BannerSection::where('page', 'Event')->first() ?? new BannerSection();
+
+        return view('frontend.events', compact('events','banner'));
     }
 
     // 6. Event Detail Page
@@ -97,23 +103,24 @@ class FrontendController extends Controller
     public function activities()
     {
         $activities = Activity::latest()->get();
+        $banner = BannerSection::where('page', 'Activities')->first() ?? new BannerSection();
 
-        return view('frontend.activities', compact('activities'));
+        return view('frontend.activities', compact('activities','banner'));
     }
 
     // 8. Blogs List Page
     public function blogs()
     {
         $blogs = Blog::where('status', 1)->latest()->get();
+        $banner = BannerSection::where('page', 'Blog')->first() ?? new BannerSection();
         
-        return view('frontend.blogs', compact('blogs'));
+        return view('frontend.blogs', compact('blogs','banner'));
     }
 
     // 9. Blog Detail Page (With SEO Support)
     public function blogDetail($slug)
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
-        // dd($blog );
         $recentBlogs = Blog::where('slug', '!=', $slug)->latest()->take(5)->get();
         
         return view('frontend.blog_details', compact('blog', 'recentBlogs'));
@@ -121,9 +128,9 @@ class FrontendController extends Controller
 
     public function contact()
     {
-        
+        $banner = BannerSection::where('page', 'Contact')->first();
         $company = CompanyDetails::select('company_name', 'fav_icon', 'google_site_verification', 'footer_content', 'facebook', 'twitter', 'linkedin', 'website', 'phone1', 'email1', 'address1','company_logo','copyright','google_map')->first();
-        return view('frontend.contact', compact('company'));
+        return view('frontend.contact', compact('company','banner'));
     }
 
 
