@@ -37,7 +37,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label">Slider Image</label>
+                                    <label class="form-label">Slider Image (1920px*756px)</label>
                                     <input type="file" class="form-control" id="image" accept="image/*"
                                         onchange="previewImage(event, '#preview-image')">
                                     <img id="preview-image" src="#" alt="" class="img-thumbnail rounded mt-3"

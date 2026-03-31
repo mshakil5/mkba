@@ -21,12 +21,11 @@
                     <div class="mkba-slide__overlay"></div>
     
                     <div class="mkba-slide__content">
-                        <span class="mkba-slide__eyebrow">Milton Keynes Bangladeshi Association</span>
+                        {{-- <span class="mkba-slide__eyebrow">Milton Keynes Bangladeshi Association</span> --}}
                         <h1 class="mkba-slide__title">{{ $slider->title }}</h1>
                         <p class="mkba-slide__subtitle">{{ $slider->sub_title }}</p>
                         <div class="mkba-slide__actions">
-                            <a href="#" class="mkba-btn mkba-btn--primary">Learn More</a>
-                            <a href="#" class="mkba-btn mkba-btn--ghost">Join Us</a>
+                            <a href="{{ $slider->link }}" class="mkba-btn mkba-btn--primary">Learn More</a>
                         </div>
                     </div>
                 </div>
