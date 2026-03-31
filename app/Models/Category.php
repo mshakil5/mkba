@@ -24,7 +24,7 @@ class Category extends Model
 
     public function galleries()
     {
-        return $this->hasMany(\App\Models\Gallery::class, 'category_id');
+        return $this->hasMany(Gallery::class, 'category_id');
     }
 
 }

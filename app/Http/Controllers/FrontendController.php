@@ -12,6 +12,7 @@ use App\Models\Blog;
 // Assuming you have these models from previous steps
 use App\Models\Event; 
 use App\Models\Activity;
+use App\Models\Category;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
 use App\Models\FaqQuestion;
@@ -49,10 +50,15 @@ class FrontendController extends Controller
     // 3. Gallery Page
     public function gallery()
     {
-        $images = Gallery::orderBy('order_by', 'asc')->get();
-        $categories = Gallery::select('category_id')->distinct()->pluck('category_id');
+        $albums = Category::withCount('galleries')
+                    ->has('galleries')
+                    ->with(['galleries' => function($q) {
+                        $q->orderBy('order_by', 'asc');
+                    }])
+                    ->orderBy('order_by', 'asc')
+                    ->get();
 
-        return view('frontend.gallery', compact('images', 'categories'));
+        return view('frontend.gallery', compact('albums'));
     }
 
     // 4. Trustee Page
