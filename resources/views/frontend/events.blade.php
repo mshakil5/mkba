@@ -17,11 +17,6 @@
         </div>
     </section>
 
-    {{-- Rest of your events content here --}}
-
-@endsection
-
-
 
     <style>
         :root {
