@@ -22,4 +22,9 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
+    public function galleries()
+    {
+        return $this->hasMany(\App\Models\Gallery::class, 'category_id');
+    }
+
 }

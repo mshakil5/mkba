@@ -114,11 +114,23 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/activity-update', [ActivityController::class, 'update'])->name('activity.update');
     Route::delete('/activity/{id}', [ActivityController::class, 'destroy'])->name('activity.delete');
 
-    Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
-    Route::post('/gallery-store', [GalleryController::class, 'store'])->name('gallery.store');
-    Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
-    Route::post('/gallery-update', [GalleryController::class, 'update'])->name('gallery.update');
-    Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.delete');
+    // Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+    // Route::post('/gallery-store', [GalleryController::class, 'store'])->name('gallery.store');
+    // Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
+    // Route::post('/gallery-update', [GalleryController::class, 'update'])->name('gallery.update');
+    // Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.delete');
+
+    // Albums
+    Route::get('/gallery',                  [GalleryController::class, 'index'])->name('gallery.index');
+    Route::post('/gallery/album/store',     [GalleryController::class, 'storeAlbum'])->name('gallery.album.store');
+    Route::post('/gallery/album/update',    [GalleryController::class, 'updateAlbum'])->name('gallery.album.update');
+    Route::delete('/gallery/album/{id}',    [GalleryController::class, 'destroyAlbum'])->name('gallery.album.delete');
+
+    // Images
+    Route::get('/gallery/{categoryId}/images',  [GalleryController::class, 'getImages'])->name('gallery.images');
+    Route::post('/gallery/image/store',         [GalleryController::class, 'storeImages'])->name('gallery.store');
+    Route::post('/gallery/image/update',        [GalleryController::class, 'updateImage'])->name('gallery.update');
+    Route::delete('/gallery/image/{id}',        [GalleryController::class, 'destroyImage'])->name('gallery.image.delete');
 
     Route::get('/trustees', [TrusteeController::class, 'index'])->name('trustee.index');
     Route::post('/trustee-store', [TrusteeController::class, 'store'])->name('trustee.store');
