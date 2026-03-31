@@ -38,6 +38,16 @@
                                     <label class="form-label">Initials (Manual Override)</label>
                                     <input type="text" id="initials" name="initials" class="form-control" placeholder="e.g. DA (Leave blank for auto-generate)">
                                 </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Profile Photo</label>
+                                    <input type="file" id="trustee_image" name="image" class="form-control" accept="image/*">
+                                    <div id="imagePreviewBox" class="mt-2" style="display:none;">
+                                        <img id="imagePreview" src="" width="80" height="80"
+                                            style="border-radius:50%; object-fit:cover; border:3px solid #dee2e6;">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Display Order</label>
                                     <input type="number" id="order_by" name="order_by" class="form-control" value="0">
@@ -170,6 +180,14 @@
                     $('#order_by').val(res.order_by);
                     $('#bio').val(res.bio);
 
+                    if (res.image) {
+                        $('#imagePreview').attr('src', '/' + res.image);
+                        $('#imagePreviewBox').show();
+                    } else {
+                        $('#imagePreviewBox').hide();
+                    }
+
+
                     $('#cardTitle').text('Update Trustee Info');
                     $('#addBtn').val('Update').text('Update Trustee');
                     $('#addThisFormContainer').show(300);
@@ -189,6 +207,22 @@
                     }
                 });
             });
+
+            // Live preview on file select
+            $('#trustee_image').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#imagePreview').attr('src', e.target.result);
+                        $('#imagePreviewBox').show();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+
         });
     </script>
 @endsection

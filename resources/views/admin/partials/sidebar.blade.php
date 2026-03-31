@@ -186,6 +186,7 @@
                         'faq.index',
                         'admin.mail-body',
                         'sections.index',
+                        'timeline.index',
                         'allslider',
                         'admin.home-footer',
                         'admin.copyright'
@@ -213,6 +214,10 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.about.edit') }}" 
                                   class="nav-link {{ Route::is('admin.about.edit') ? 'active' : '' }}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('timeline.index') }}" 
+                                  class="nav-link {{ Route::is('timeline.index') ? 'active' : '' }}">Timeline</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.privacy-policy') }}" 

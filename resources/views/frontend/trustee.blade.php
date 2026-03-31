@@ -130,9 +130,16 @@
                             $initials = strtoupper(substr($words[0],0,1) . (isset($words[1]) ? substr($words[1],0,1) : ''));
                         @endphp
 
-                        <div class="initial-box">
-                            {{ $initials }}
-                        </div>
+                        @if($trustee->image)
+                            <div class="initial-box" style="padding:0; overflow:hidden;">
+                                <img src="{{ asset($trustee->image) }}" alt="{{ $trustee->name }}"
+                                    style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                        @else
+                            <div class="initial-box">
+                                {{ $initials }}
+                            </div>
+                        @endif
 
                         <h3 class="trustee-name">
                             {{ $trustee->name }}

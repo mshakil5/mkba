@@ -178,7 +178,7 @@
         </div>
     </section>
 
-    <section class="pb-5">
+    <section class="pb-5 pt-4">
         <div class="container">
             <div class="filter-container text-center">
                 <div class="d-inline-flex bg-light p-2 rounded-3 shadow-sm">
