@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ActivityController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
@@ -155,6 +156,14 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::get('/timeline/{id}/edit', [TimelineController::class, 'edit'])->name('timeline.edit');
     Route::post('/timeline-update', [TimelineController::class, 'update'])->name('timeline.update');
     Route::delete('/timeline/{id}', [TimelineController::class, 'destroy'])->name('timeline.delete');
+
+
+    // banner section for all pages
+    Route::get('/banner-section', [BannerController::class, 'index'])->name('banner-section.index');
+    Route::post('/banner-section-store', [BannerController::class, 'store'])->name('banner-section.store');
+    Route::get('/banner-section/{id}/edit', [BannerController::class, 'edit'])->name('banner-section.edit');
+    Route::post('/banner-section-update', [BannerController::class, 'update'])->name('banner-section.update');
+    Route::delete('/banner-section/{id}', [BannerController::class, 'destroy'])->name('banner-section.delete');
 
 
 
