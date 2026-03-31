@@ -293,16 +293,7 @@ $(function () {
         $('#newAlbumBtn').hide();
     });
 
-    $(document).on('click', '.deleteBtn', function () {
-        if (!confirm('Delete this album and ALL its images?')) return;
-        $.ajax({
-            url: $(this).data('delete-url'), type: 'DELETE',
-            success: function (res) {
-                showSuccess(res.message);
-                albumTable.ajax.reload(null, false);
-            }
-        });
-    });
+
 
     // ════════════════════════════════════════════════
     // IMAGE CRUD

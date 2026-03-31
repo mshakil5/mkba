@@ -160,18 +160,7 @@ $(function(){
         });
     });
 
-    $(document).on('click','.deleteBtn', function(){
-        if(!confirm('Are you sure?')) return;
 
-        $.ajax({
-            url: $(this).data('delete-url'),
-            type: "DELETE",
-            success: function(res){
-                showSuccess(res.message);
-                table.ajax.reload();
-            }
-        });
-    });
 
 });
 </script>

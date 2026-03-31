@@ -108,18 +108,8 @@
                 });
             });
 
-            $(document).on('click', '.deleteBtn', function() {
-                if (!confirm('Delete this event?')) return;
-                $.ajax({
-                    url: $(this).data('delete-url'),
-                    type: 'DELETE',
-                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
-                    success: function(res) {
-                        showSuccess(res.message);
-                        table.ajax.reload();
-                    }
-                });
-            });
+            
+            
         });
     </script>
 @endsection
