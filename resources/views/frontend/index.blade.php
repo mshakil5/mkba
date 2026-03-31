@@ -3,39 +3,68 @@
 @section('content')
 
 
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-indicators">
+    {{-- =============================================
+        MKBA Hero Slider — Fixed Version
+        ============================================= --}}
+    
+    <section class="mkba-hero-wrap">
+        <div class="mkba-slides" id="mkbaSlides">
             @foreach($sliders as $key => $slider)
-                <button type="button" 
-                        data-bs-target="#heroCarousel" 
-                        data-bs-slide-to="{{ $key }}" 
-                        class="{{ $loop->first ? 'active' : '' }}" 
-                        aria-current="{{ $loop->first ? 'true' : 'false' }}">
-                </button>
-            @endforeach
-        </div>
-
-        <div class="carousel-inner">
-            @foreach($sliders as $slider)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }}" 
-                    style="background-image: url('{{ asset('uploads/slider/' . $slider->image) }}');">
-                    <div class="carousel-overlay"></div>
-                    
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ $slider->title }}</h5>
-                        <p>{{ $slider->sub_title }}</p>
+                <div class="mkba-slide {{ $loop->first ? 'is-active' : '' }}"
+                    data-index="{{ $key }}">
+    
+                    {{-- Use <img> instead of CSS background-image to avoid asset URL issues --}}
+                    <img class="mkba-slide__bg"
+                        src="{{ asset('uploads/slider/' . $slider->image) }}"
+                        alt="{{ $slider->title }}">
+    
+                    <div class="mkba-slide__overlay"></div>
+    
+                    <div class="mkba-slide__content">
+                        <span class="mkba-slide__eyebrow">Milton Keynes Bangladeshi Association</span>
+                        <h1 class="mkba-slide__title">{{ $slider->title }}</h1>
+                        <p class="mkba-slide__subtitle">{{ $slider->sub_title }}</p>
+                        <div class="mkba-slide__actions">
+                            <a href="#" class="mkba-btn mkba-btn--primary">Learn More</a>
+                            <a href="#" class="mkba-btn mkba-btn--ghost">Join Us</a>
+                        </div>
                     </div>
                 </div>
             @endforeach
         </div>
+    
+        {{-- Arrows --}}
+        <button class="mkba-arrow mkba-arrow--prev" id="mkbaPrev" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="mkba-arrow mkba-arrow--next" id="mkbaNext" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    
+        {{-- Dots --}}
+        <div class="mkba-dots">
+            @foreach($sliders as $key => $slider)
+                <button class="mkba-dot {{ $loop->first ? 'is-active' : '' }}"
+                        data-goto="{{ $key }}"
+                        aria-label="Slide {{ $key + 1 }}"></button>
+            @endforeach
+        </div>
+    
+        {{-- Counter --}}
+        <div class="mkba-counter">
+            <span id="mkbaCurrent">01</span>
+            <span class="mkba-counter__sep"></span>
+            <span id="mkbaTotal">{{ str_pad(count($sliders), 2, '0', STR_PAD_LEFT) }}</span>
+        </div>
+    </section>
+    
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-    </div>
 
     <section class="section-padding text-center" style="background-color: #F8FAFC">
         <div class="container">
@@ -361,6 +390,93 @@
             </a>
         </div>
     </section>
+
+
+@endsection
+
+@section('script')
+
+
+
+
+{{-- =====================  JS  ===================== --}}
+<script>
+(function () {
+    var slides  = document.querySelectorAll('.mkba-slide');
+    var dots    = document.querySelectorAll('.mkba-dot');
+    var prevBtn = document.getElementById('mkbaPrev');
+    var nextBtn = document.getElementById('mkbaNext');
+    var curEl   = document.getElementById('mkbaCurrent');
+    var total   = slides.length;
+    var active  = 0;
+    var busy    = false;
+    var timer   = null;
+    var DELAY   = 5000;
+    var DUR     = 810; /* slightly over CSS duration */
+ 
+    function pad(n) { return ('0' + n).slice(-2); }
+ 
+    function goTo(next) {
+        if (busy || next === active || total < 2) return;
+        busy = true;
+ 
+        /* Push current slide out to the LEFT */
+        slides[active].classList.remove('is-active');
+        slides[active].classList.add('is-leaving');
+ 
+        /* Bring next slide in from the RIGHT */
+        slides[next].classList.add('is-active');
+ 
+        /* Dots */
+        dots[active].classList.remove('is-active');
+        dots[next].classList.add('is-active');
+ 
+        /* Counter */
+        if (curEl) curEl.textContent = pad(next + 1);
+ 
+        /* Cleanup */
+        var leaving = slides[active];
+        setTimeout(function () {
+            leaving.classList.remove('is-leaving');
+            active = next;
+            busy   = false;
+        }, DUR);
+    }
+ 
+    function next() { goTo((active + 1) % total); }
+    function prev() { goTo((active - 1 + total) % total); }
+ 
+    function startAuto() { stopAuto(); timer = setInterval(next, DELAY); }
+    function stopAuto()  { clearInterval(timer); }
+ 
+    if (nextBtn) nextBtn.addEventListener('click', function () { stopAuto(); next(); startAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { stopAuto(); prev(); startAuto(); });
+ 
+    dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+            stopAuto();
+            goTo(parseInt(this.dataset.goto, 10));
+            startAuto();
+        });
+    });
+ 
+    /* Touch swipe */
+    var wrap = document.querySelector('.mkba-hero-wrap');
+    var tx = 0;
+    if (wrap) {
+        wrap.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].screenX; }, { passive: true });
+        wrap.addEventListener('touchend', function (e) {
+            var dx = e.changedTouches[0].screenX - tx;
+            if (Math.abs(dx) > 50) { stopAuto(); dx < 0 ? next() : prev(); startAuto(); }
+        }, { passive: true });
+        wrap.addEventListener('mouseenter', stopAuto);
+        wrap.addEventListener('mouseleave', startAuto);
+    }
+ 
+    startAuto();
+})();
+</script>
+
 
 
 @endsection

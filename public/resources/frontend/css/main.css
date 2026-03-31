@@ -1,10 +1,18 @@
 
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
 
         :root {
             --primary-green: #00684a;
             --accent-red: #d90429;
             --text-dark: #0a1d37;
             --bg-light: #f8f9fa;
+            --mkba-red:      #e8192c;
+            --mkba-red-dark: #c0121f;
+            --mkba-white:    #ffffff;
+            --mkba-dur:      750ms;
+            --mkba-ease:     cubic-bezier(0.76, 0, 0.24, 1);
         }
 
         body {
@@ -52,7 +60,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 104, 74, 0.7); /* Greenish Overlay */
         }
 
         /* Section Styling */
@@ -183,8 +190,251 @@
             color: #fff;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .cta-section h2 { font-size: 2rem; }
             .footer-heading { margin-top: 1rem; }
+        }
+
+
+
+
+
+
+
+        /* hero carasol css */
+
+
+
+        
+        /* ── Outer wrapper ─────────────────────── */
+        .mkba-hero-wrap {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 520px;
+            overflow: hidden;
+            background: #111;
+        }
+        
+        /* ── Slides container ──────────────────── */
+        .mkba-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* ── Single slide ──────────────────────── */
+
+        .mkba-slide {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            transform: translateX(100%);
+            transition: transform var(--mkba-dur) var(--mkba-ease);
+            z-index: 1;
+            will-change: transform;
+        }
+        .mkba-slide.is-active  { transform: translateX(0%);    z-index: 2; }
+        .mkba-slide.is-leaving { transform: translateX(-100%); z-index: 3; }
+        .mkba-slide.is-active .mkba-slide__content {
+            opacity: 1;
+            transform: translateY(-50%);
+            transition-delay: 0.35s; /* slide আসার পরে start হবে */
+        }
+        
+        /* ── Background image ──────────────────── */
+        .mkba-slide__bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        /* ── Gradient overlay ──────────────────── */
+        .mkba-slide__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                105deg,
+                rgba(0,0,0,0.70) 0%,
+                rgba(0,0,0,0.40) 55%,
+                rgba(0,0,0,0.10) 100%
+            );
+            z-index: 1;
+        }
+        
+        /* ── Text content — left aligned ───────── */
+        .mkba-slide__content {
+            position: absolute;
+            top: 50%;
+            left: 7vw;
+            max-width: 600px;
+            color: var(--mkba-white);
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(calc(-50% + 40px));
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .mkba-slide__eyebrow {
+            display: inline-block;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.70);
+            margin-bottom: 0.9rem;
+        }
+        
+        .mkba-slide__title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.12;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 24px rgba(0,0,0,0.45);
+        }
+        
+        .mkba-slide__subtitle {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            line-height: 1.65;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 2rem;
+            max-width: 460px;
+        }
+        
+        /* ── Buttons ───────────────────────────── */
+        .mkba-slide__actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .mkba-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.9rem;
+            border-radius: 4px;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: background 0.22s, color 0.22s, border-color 0.22s, transform 0.2s;
+        }
+        .mkba-btn--primary {
+            background: var(--mkba-red);
+            color: var(--mkba-white);
+            border-color: var(--mkba-red);
+        }
+        .mkba-btn--primary:hover {
+            background: var(--mkba-red-dark);
+            border-color: var(--mkba-red-dark);
+            transform: translateY(-2px);
+            color: var(--mkba-white);
+        }
+        .mkba-btn--ghost {
+            background: transparent;
+            color: var(--mkba-white);
+            border-color: rgba(255,255,255,0.65);
+        }
+        .mkba-btn--ghost:hover {
+            background: rgba(255,255,255,0.14);
+            border-color: var(--mkba-white);
+            transform: translateY(-2px);
+            color: var(--mkba-white);
+        }
+        
+        /* ── Arrows ────────────────────────────── */
+        .mkba-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.13);
+            border: 1.5px solid rgba(255,255,255,0.30);
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: background 0.22s, border-color 0.22s, transform 0.22s;
+        }
+        .mkba-arrow--prev { left: 1.4rem; }
+        .mkba-arrow--next { right: 1.4rem; }
+        .mkba-arrow:hover {
+            background: var(--mkba-red);
+            border-color: var(--mkba-red);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* ── Dots ──────────────────────────────── */
+        .mkba-dots {
+            position: absolute;
+            bottom: 1.8rem;
+            left: 7vw;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+        .mkba-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.38);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.28s, transform 0.28s;
+        }
+        .mkba-dot.is-active {
+            background: var(--mkba-red);
+            transform: scale(1.4);
+        }
+        
+        /* ── Counter ───────────────────────────── */
+        .mkba-counter {
+            position: absolute;
+            bottom: 1.8rem;
+            right: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            color: rgba(255,255,255,0.65);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            z-index: 10;
+        }
+        .mkba-counter__sep {
+            width: 26px;
+            height: 1.5px;
+            background: rgba(255,255,255,0.38);
+            display: block;
+        }
+        #mkbaCurrent { color: var(--mkba-white); }
+        
+        /* ── Responsive ────────────────────────── */
+        @media (max-width: 768px) {
+            .mkba-slide__content { left: 5vw; right: 5vw; max-width: 100%; }
+            .mkba-arrow { display: none; }
+            .mkba-dots { left: 50%; transform: translateX(-50%); }
+            .mkba-counter { display: none; }
         }
