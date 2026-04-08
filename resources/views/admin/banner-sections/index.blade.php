@@ -264,6 +264,9 @@
                     },
                     success: function(res) {
                         showSuccess(res.message);
+                        setTimeout(function() {
+                            resetForm();
+                        }, 3000);
                         $('#addThisFormContainer').hide();
                         $('#newBtn').show();
                         table.ajax.reload(null, false);

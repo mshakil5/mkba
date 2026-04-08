@@ -90,6 +90,11 @@
                 var url = $(this).val() === 'Create' ? "{{ route('timeline.store') }}" : "{{ route('timeline.update') }}";
                 $.post(url, $('#createThisForm').serialize(), function(res) {
                     showSuccess(res.message);
+                    
+                        setTimeout(function() {
+                            resetForm();
+                        }, 3000);
+                        
                     $('#addThisFormContainer').hide();
                     $('#newBtn').show();
                     table.ajax.reload();
