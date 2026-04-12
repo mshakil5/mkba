@@ -147,16 +147,18 @@
     </section>
 
 
-    <!-- Events-->
-    <section class="section-padding"  style="background-color: #F8FAFC">
+    
+    <!-- Activities -->
+    <section class="section-padding" style="background-color: #F3F8F7;">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT'S COMING</span>
-                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Upcoming Events</h2>
+                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT WE DO</span>
+                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Our Activities</h2>
+                <p class="text-muted mx-auto" style="max-width: 600px;">From cultural celebrations to educational workshops, we organize diverse activities that bring our community together.</p>
             </div>
 
             <div class="row g-4">
-                @foreach($events as $event)
+                @foreach($activities as $event)
                     <div class="col-md-4">
                         <div class="event-card">
                             <div class="position-relative overflow-hidden rounded-4 mb-3">
@@ -189,123 +191,10 @@
 
             <div class="text-center mt-5">
                 <a href="{{ route('frontend.events') }}" class="btn btn-outline-success px-5 py-2 rounded-pill fw-bold" style="border-color: #00684a; color: #00684a;">
-                    View All Events <i class="fa-solid fa-arrow-right ms-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        /* Event Specific Styles */
-        .event-card {
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        .event-card:hover .event-img {
-            transform: scale(1.1);
-        }
-        .event-img {
-            transition: transform 0.5s ease;
-            height: 250px;
-            width: 100%;
-            object-fit: cover;
-        }
-        .date-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: white;
-            padding: 8px 12px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            min-width: 55px;
-        }
-        .date-badge .day {
-            display: block;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #0a1d37;
-            line-height: 1;
-        }
-        .date-badge .month {
-            display: block;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #ff4d4d;
-        }
-        .event-meta {
-            color: #6c757d;
-            font-size: 0.85rem;
-        }
-        .event-meta i {
-            width: 15px;
-        }
-        
-        /* Responsive adjustment for stats */
-        @media (max-width: 768px) {
-            .main-title { font-size: 2rem; }
-            .event-img { height: 200px; }
-        }
-    </style>
-
-
-    <!-- Activities -->
-    <section class="section-padding" style="background-color: #F3F8F7;">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT WE DO</span>
-                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Our Activities</h2>
-                <p class="text-muted mx-auto" style="max-width: 600px;">From cultural celebrations to educational workshops, we organize diverse activities that bring our community together.</p>
-            </div>
-
-            <div class="row g-4">
-                @foreach($activities as $activity)
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="activity-card" onclick="window.location='{{ route('activity.show', $activity->slug) }}'">
-                            <div class="img-container mb-3">
-                                <img src="{{ asset($activity->image) }}" alt="{{ $activity->title }}">
-                                
-                                <span class="category-tag tag-{{ strtolower($activity->category) }}">
-                                    <i class="fa-solid fa-tag me-1"></i> {{ $activity->category }}
-                                </span>
-
-                                <div class="activity-date">
-                                    <span class="d-block fw-bold fs-5">
-                                        {{ date('d', strtotime($activity->activity_date)) }}
-                                    </span>
-                                    <span class="month-year">
-                                        {{ date('M Y', strtotime($activity->activity_date)) }}
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <h5 class="fw-bold mb-2">{{ $activity->title }}</h5>
-                            
-                            <p class="text-muted small mb-3">
-                                {{ Str::limit($activity->description, 100) }}
-                            </p>
-                            
-                            <div class="meta-info">
-                                <span>
-                                    <i class="fa-regular fa-calendar-check"></i> 
-                                    {{ $activity->time_range }}
-                                </span>
-                                <span>
-                                    <i class="fa-solid fa-location-dot"></i> 
-                                    {{ $activity->location }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="text-center mt-5">
-                <a href="{{ route('frontend.activities') }}" class="btn btn-view-all px-5 py-2 rounded-pill fw-bold">
                     View All Activities <i class="fa-solid fa-arrow-right ms-2"></i>
                 </a>
             </div>
+
         </div>
     </section>
 
@@ -395,6 +284,114 @@
             transform: translateY(-2px);
         }
     </style>
+
+
+
+
+
+    <!-- Events-->
+    <section class="section-padding"  style="background-color: #F8FAFC">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT'S COMING</span>
+                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Upcoming Events</h2>
+            </div>
+
+            <div class="row g-4">
+                @foreach($events as $event)
+                    <div class="col-md-4">
+                        <div class="event-card">
+                            <div class="position-relative overflow-hidden rounded-4 mb-3">
+                                <a href="{{ route('events.show', $event->slug) }}"> 
+                                    <img src="{{ asset($event->image) }}" class="img-fluid event-img" alt="{{ $event->title }}">
+                                </a>
+                                <div class="date-badge">
+                                    <span class="day">{{ date('d', strtotime($event->event_date)) }}</span>
+                                    <span class="month text-uppercase">{{ date('M', strtotime($event->event_date)) }}</span>
+                                </div>
+                            </div>
+                            <h5 class="fw-bold mb-2">
+                                <a href="{{ route('events.show', $event->slug) }}" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">
+                                    {{ $event->title }}
+                                </a>
+                            </h5>
+                            <div class="event-meta">
+                                <p class="mb-1">
+                                    <i class="fa-regular fa-clock me-2"></i>
+                                    {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fa-solid fa-location-dot me-2"></i>{{ $event->location }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="text-center mt-5 d-none">
+                <a href="{{ route('frontend.events') }}" class="btn btn-outline-success px-5 py-2 rounded-pill fw-bold" style="border-color: #00684a; color: #00684a;">
+                    View All Events <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* Event Specific Styles */
+        .event-card {
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .event-card:hover .event-img {
+            transform: scale(1.1);
+        }
+        .event-img {
+            transition: transform 0.5s ease;
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .date-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 55px;
+        }
+        .date-badge .day {
+            display: block;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #0a1d37;
+            line-height: 1;
+        }
+        .date-badge .month {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #ff4d4d;
+        }
+        .event-meta {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+        .event-meta i {
+            width: 15px;
+        }
+        
+        /* Responsive adjustment for stats */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2rem; }
+            .event-img { height: 200px; }
+        }
+    </style>
+
+
 
 
 

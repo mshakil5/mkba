@@ -25,7 +25,7 @@
                 <ul class="list-unstyled footer-links">
                     <li><a href="{{ route('home') }}"><i class="fa-solid fa-circle me-2" style="font-size: 0.4rem;"></i> Home</a></li>
                     <li><a href="{{ route('frontend.about') }}"><i class="fa-solid fa-circle me-2" style="font-size: 0.4rem;"></i> About</a></li>
-                    <li><a href="{{ route('frontend.events') }}"><i class="fa-solid fa-circle me-2" style="font-size: 0.4rem;"></i> Events</a></li>
+                    <li><a href="{{ route('frontend.events') }}"><i class="fa-solid fa-circle me-2" style="font-size: 0.4rem;"></i> Activities</a></li>
                     <li><a href="{{ route('frontend.gallery') }}"><i class="fa-solid fa-circle me-2" style="font-size: 0.4rem;"></i> Gallery</a></li>
                 </ul>
             </div>

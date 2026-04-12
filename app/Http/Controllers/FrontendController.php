@@ -22,6 +22,7 @@ use App\Models\CompanyDetails;
 use App\Models\ContactEmail;
 use App\Models\Mission;
 use App\Models\Slider;
+use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
@@ -29,9 +30,15 @@ class FrontendController extends Controller
     public function index()
     {
         $about = About::first();
-        $events = Event::latest()->take(3)->get();
+        $activities = Event::latest()->take(6)->get();
+        
+        $events = Event::where('status', 'Upcoming')
+                ->whereDate('event_date', '>=', Carbon::today())
+                ->latest()
+                ->take(6)
+                ->get();
+
         $blogs = Blog::where('status', 1)->latest()->take(3)->get();
-        $activities = Activity::latest()->take(6)->get();
 
         $sliders = Slider::where('status', 1)->get();
         $missions = Mission::where('status', 1)->get();
