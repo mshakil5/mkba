@@ -289,53 +289,57 @@
 
 
 
-    <!-- Events-->
-    <section class="section-padding"  style="background-color: #F8FAFC">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT'S COMING</span>
-                <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Upcoming Events</h2>
-            </div>
 
-            <div class="row g-4">
-                @foreach($events as $event)
-                    <div class="col-md-4">
-                        <div class="event-card">
-                            <div class="position-relative overflow-hidden rounded-4 mb-3">
-                                <a href="{{ route('events.show', $event->slug) }}"> 
-                                    <img src="{{ asset($event->image) }}" class="img-fluid event-img" alt="{{ $event->title }}">
-                                </a>
-                                <div class="date-badge">
-                                    <span class="day">{{ date('d', strtotime($event->event_date)) }}</span>
-                                    <span class="month text-uppercase">{{ date('M', strtotime($event->event_date)) }}</span>
+    @if ($events->count() > 0)
+            <!-- Events-->
+        <section class="section-padding"  style="background-color: #F8FAFC">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="subtitle" style="color: #ff4d4d; letter-spacing: 2px; font-weight: 700; font-size: 0.8rem;">WHAT'S COMING</span>
+                    <h2 class="fw-bold" style="color: #0a1d37; font-size: 2.5rem;">Upcoming Events</h2>
+                </div>
+
+                <div class="row g-4">
+                    @foreach($events as $event)
+                        <div class="col-md-4">
+                            <div class="event-card">
+                                <div class="position-relative overflow-hidden rounded-4 mb-3">
+                                    <a href="{{ route('events.show', $event->slug) }}"> 
+                                        <img src="{{ asset($event->image) }}" class="img-fluid event-img" alt="{{ $event->title }}">
+                                    </a>
+                                    <div class="date-badge">
+                                        <span class="day">{{ date('d', strtotime($event->event_date)) }}</span>
+                                        <span class="month text-uppercase">{{ date('M', strtotime($event->event_date)) }}</span>
+                                    </div>
+                                </div>
+                                <h5 class="fw-bold mb-2">
+                                    <a href="{{ route('events.show', $event->slug) }}" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">
+                                        {{ $event->title }}
+                                    </a>
+                                </h5>
+                                <div class="event-meta">
+                                    <p class="mb-1">
+                                        <i class="fa-regular fa-clock me-2"></i>
+                                        {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="fa-solid fa-location-dot me-2"></i>{{ $event->location }}
+                                    </p>
                                 </div>
                             </div>
-                            <h5 class="fw-bold mb-2">
-                                <a href="{{ route('events.show', $event->slug) }}" class="text-decoration-none" style="color: #0a1d37; transition: 0.3s;">
-                                    {{ $event->title }}
-                                </a>
-                            </h5>
-                            <div class="event-meta">
-                                <p class="mb-1">
-                                    <i class="fa-regular fa-clock me-2"></i>
-                                    {{ date('g:i A', strtotime($event->start_time)) }} - {{ date('g:i A', strtotime($event->end_time)) }}
-                                </p>
-                                <p class="mb-0">
-                                    <i class="fa-solid fa-location-dot me-2"></i>{{ $event->location }}
-                                </p>
-                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
 
-            <div class="text-center mt-5 d-none">
-                <a href="{{ route('frontend.events') }}" class="btn btn-outline-success px-5 py-2 rounded-pill fw-bold" style="border-color: #00684a; color: #00684a;">
-                    View All Events <i class="fa-solid fa-arrow-right ms-2"></i>
-                </a>
+                <div class="text-center mt-5 d-none">
+                    <a href="{{ route('frontend.events') }}" class="btn btn-outline-success px-5 py-2 rounded-pill fw-bold" style="border-color: #00684a; color: #00684a;">
+                        View All Events <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
+
 
     <style>
         /* Event Specific Styles */
