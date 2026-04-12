@@ -94,34 +94,54 @@
     <section class="stats-section py-5" style="background-color: #00684a; color: white;">
         <div class="container py-4">
             <div class="row g-4 text-center">
-                <div class="col-6 col-md-3">
-                    <div class="stat-icon mb-3">
-                        <i class="fa-solid fa-users-line fs-3" style="color: #ff4d4d;"></i>
+                @php
+                    // Fetch only active stats, ordered by the admin's preference
+                    $stats = \App\Models\Stat::where('is_active', 1)
+                        ->orderBy('order_by', 'asc')
+                        ->get();
+                @endphp
+
+                @if($stats->count() > 0)
+                    @foreach($stats as $stat)
+                        <div class="col-6 col-md-3">
+                            <div class="stat-icon mb-3">
+                                <i class="{{ $stat->icon_class }} fs-3" style="color: #ff4d4d;"></i>
+                            </div>
+                            <h2 class="fw-bold mb-0">{{ $stat->count }}</h2>
+                            <p class="small opacity-75">{{ $stat->label }}</p>
+                        </div>
+                    @endforeach
+                @else
+                    <!-- Fallback static content if database is empty (optional) -->
+                    <div class="col-6 col-md-3">
+                        <div class="stat-icon mb-3">
+                            <i class="fa-solid fa-users-line fs-3" style="color: #ff4d4d;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-0">2,000+</h2>
+                        <p class="small opacity-75">Community Members</p>
                     </div>
-                    <h2 class="fw-bold mb-0">2,000+</h2>
-                    <p class="small opacity-75">Community Members</p>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stat-icon mb-3">
-                        <i class="fa-solid fa-calendar-check fs-3" style="color: #ff4d4d;"></i>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-icon mb-3">
+                            <i class="fa-solid fa-calendar-check fs-3" style="color: #ff4d4d;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-0">50+</h2>
+                        <p class="small opacity-75">Events Per Year</p>
                     </div>
-                    <h2 class="fw-bold mb-0">50+</h2>
-                    <p class="small opacity-75">Events Per Year</p>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stat-icon mb-3">
-                        <i class="fa-solid fa-heart-pulse fs-3" style="color: #ff4d4d;"></i>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-icon mb-3">
+                            <i class="fa-solid fa-heart-pulse fs-3" style="color: #ff4d4d;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-0">500+</h2>
+                        <p class="small opacity-75">Families Supported</p>
                     </div>
-                    <h2 class="fw-bold mb-0">500+</h2>
-                    <p class="small opacity-75">Families Supported</p>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stat-icon mb-3">
-                        <i class="fa-solid fa-award fs-3" style="color: #ff4d4d;"></i>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-icon mb-3">
+                            <i class="fa-solid fa-award fs-3" style="color: #ff4d4d;"></i>
+                        </div>
+                        <h2 class="fw-bold mb-0">20+</h2>
+                        <p class="small opacity-75">Years of Service</p>
                     </div>
-                    <h2 class="fw-bold mb-0">20+</h2>
-                    <p class="small opacity-75">Years of Service</p>
-                </div>
+                @endif
             </div>
         </div>
     </section>

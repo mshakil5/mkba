@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MissionController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StatController;
 use App\Http\Controllers\Admin\TimelineController;
 use App\Http\Controllers\Admin\TrusteeController;
 use App\Http\Controllers\Admin\UserController;
@@ -164,6 +165,12 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::get('/banner-section/{id}/edit', [BannerController::class, 'edit'])->name('banner-section.edit');
     Route::post('/banner-section-update', [BannerController::class, 'update'])->name('banner-section.update');
     Route::delete('/banner-section/{id}', [BannerController::class, 'destroy'])->name('banner-section.delete');
+
+    Route::get('/stats', [StatController::class, 'index'])->name('stats.index');
+    Route::post('/stats-store', [StatController::class, 'store'])->name('stats.store');
+    Route::get('/stats/{id}/edit', [StatController::class, 'edit'])->name('stats.edit');
+    Route::post('/stats-update', [StatController::class, 'update'])->name('stats.update');
+    Route::delete('/stats/{id}', [StatController::class, 'destroy'])->name('stats.delete');
 
 
 

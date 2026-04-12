@@ -2,7 +2,6 @@
 @section('title', 'Gallery Management')
 @section('content')
 
-{{-- ── Tab Navigation ─────────────────────────── --}}
 <div class="container-fluid">
     <ul class="nav nav-tabs mb-3" id="galleryTab">
         <li class="nav-item">
@@ -12,27 +11,19 @@
         </li>
         <li class="nav-item">
             <button class="nav-link" data-tab="images" id="imagesTabBtn" style="display:none;">
-                <i class="ri-image-line me-1"></i> Images: <strong id="currentAlbumName"></strong>
+                <i class="ri-image-line me-1"></i> Media: <strong id="currentAlbumName"></strong>
                 <span class="ms-2 badge bg-secondary" id="backToAlbums" style="cursor:pointer;">← Back</span>
             </button>
         </li>
     </ul>
 </div>
 
-{{-- ══════════════════════════════════════════════
-     ALBUMS TAB
-══════════════════════════════════════════════ --}}
+{{-- ══ ALBUMS TAB ══ --}}
 <div id="albumsTab">
-
-    {{-- Add Album Form --}}
     <div class="container-fluid mb-3">
-        <div class="row">
-            <div class="col-auto">
-                <button class="btn btn-primary" id="newAlbumBtn">
-                    <i class="ri-add-line me-1"></i> Add New Album
-                </button>
-            </div>
-        </div>
+        <button class="btn btn-primary" id="newAlbumBtn">
+            <i class="ri-add-line me-1"></i> Add New Album
+        </button>
     </div>
 
     <div class="container-fluid" id="albumFormContainer" style="display:none;">
@@ -72,12 +63,8 @@
                 <table id="albumTable" class="table table-bordered table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Sl</th>
-                            <th>Cover</th>
-                            <th>Album Name</th>
-                            <th>Images</th>
-                            <th>Order</th>
-                            <th>Action</th>
+                            <th>Sl</th><th>Cover</th><th>Album Name</th>
+                            <th>Media</th><th>Order</th><th>Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -86,27 +73,19 @@
     </div>
 </div>
 
-{{-- ══════════════════════════════════════════════
-     IMAGES TAB
-══════════════════════════════════════════════ --}}
+{{-- ══ MEDIA TAB ══ --}}
 <div id="imagesTab" style="display:none;">
-
-    {{-- Upload Form --}}
     <div class="container-fluid mb-3">
-        <div class="row">
-            <div class="col-auto">
-                <button class="btn btn-success" id="newImageBtn">
-                    <i class="ri-upload-2-line me-1"></i> Upload Images
-                </button>
-            </div>
-        </div>
+        <button class="btn btn-success" id="newImageBtn">
+            <i class="ri-upload-2-line me-1"></i> Upload Media
+        </button>
     </div>
 
     <div class="container-fluid" id="imageFormContainer" style="display:none;">
         <div class="row justify-content-center">
             <div class="col-xl-7">
                 <div class="card">
-                    <div class="card-header"><h4 id="imageFormTitle">Upload Images</h4></div>
+                    <div class="card-header"><h4 id="imageFormTitle">Upload Media</h4></div>
                     <div class="card-body">
                         <form id="imageForm" enctype="multipart/form-data">
                             @csrf
@@ -124,20 +103,45 @@
                                 </div>
                             </div>
 
-                            {{-- Multiple upload (hidden on edit) --}}
+                            {{-- Multi-upload (create mode) --}}
                             <div class="mb-3" id="multiUploadBox">
-                                <label class="form-label">Select Images <span class="text-danger">*</span></label>
-                                <input type="file" id="imagesInput" name="images[]" class="form-control" multiple accept="image/*">
-                                <small class="text-muted">Hold Ctrl/Cmd to select multiple images. Max 5MB each.</small>
-                                
-                                {{-- Dynamic preview with per-image caption --}}
+                                <label class="form-label">
+                                    Select Images or Videos <span class="text-danger">*</span>
+                                </label>
+
+                                {{-- Toggle buttons --}}
+                                <div class="mb-2">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <input type="radio" class="btn-check" name="uploadType" id="typeImage" value="image" checked>
+                                        <label class="btn btn-outline-success" for="typeImage">
+                                            <i class="ri-image-line me-1"></i> Images
+                                        </label>
+                                        <input type="radio" class="btn-check" name="uploadType" id="typeVideo" value="video">
+                                        <label class="btn btn-outline-primary" for="typeVideo">
+                                            <i class="ri-video-line me-1"></i> Videos
+                                        </label>
+                                        <input type="radio" class="btn-check" name="uploadType" id="typeBoth" value="both">
+                                        <label class="btn btn-outline-secondary" for="typeBoth">
+                                            <i class="ri-file-line me-1"></i> Both
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <input type="file" id="filesInput" name="files[]" class="form-control" multiple
+                                       accept="image/*">
+                                <small class="text-muted">
+                                    Images: JPG, PNG, GIF, WebP — max 5 MB each. &nbsp;|&nbsp;
+                                    Videos: MP4, MOV, AVI, WebM — max 50 MB each.
+                                </small>
+
                                 <div id="multiPreview" class="mt-3 d-flex flex-wrap gap-3"></div>
                             </div>
 
-                            {{-- Single replace (shown on edit) --}}
+                            {{-- Single replace (edit mode) --}}
                             <div class="mb-3" id="singleUploadBox" style="display:none;">
-                                <label class="form-label">Replace Image <span class="text-muted">(optional)</span></label>
-                                <input type="file" id="singleImageInput" name="image" class="form-control" accept="image/*">
+                                <label class="form-label">Replace File <span class="text-muted">(optional)</span></label>
+                                <input type="file" id="singleFileInput" name="file" class="form-control"
+                                       accept="image/*,video/mp4,video/quicktime,video/webm,video/x-msvideo">
                                 <div id="singlePreview" class="mt-2"></div>
                             </div>
 
@@ -154,16 +158,13 @@
 
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header"><h4 class="mb-0" id="imageTableTitle">Images</h4></div>
+            <div class="card-header"><h4 class="mb-0" id="imageTableTitle">Media</h4></div>
             <div class="card-body">
                 <table id="imageTable" class="table table-bordered table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Sl</th>
-                            <th>Preview</th>
-                            <th>Caption</th>
-                            <th>Order</th>
-                            <th>Action</th>
+                            <th>Sl</th><th>Preview</th><th>Type</th>
+                            <th>Caption</th><th>Order</th><th>Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -182,10 +183,21 @@ $(function () {
     var currentCategoryId = null;
     var imageTable = null;
 
+    // ── Accept filter based on upload type toggle ────
+    $('input[name="uploadType"]').on('change', function () {
+        var val = $(this).val();
+        var acceptMap = {
+            image : 'image/*',
+            video : 'video/mp4,video/quicktime,video/webm,video/x-msvideo',
+            both  : 'image/*,video/mp4,video/quicktime,video/webm,video/x-msvideo'
+        };
+        $('#filesInput').attr('accept', acceptMap[val]).val('');
+        $('#multiPreview').html('');
+    });
+
     // ── Album DataTable ──────────────────────────────
     var albumTable = $('#albumTable').DataTable({
-        processing: true,
-        serverSide: true,
+        processing: true, serverSide: true,
         ajax: "{{ route('gallery.index') }}",
         columns: [
             { data: 'DT_RowIndex', orderable: false, searchable: false },
@@ -197,42 +209,36 @@ $(function () {
         ]
     });
 
-    // ── Switch to Images tab ─────────────────────────
+    // ── Open album → media tab ───────────────────────
     function openAlbum(id, name) {
         currentCategoryId = id;
         $('#currentAlbumName').text(name);
         $('#imageCategoryId').val(id);
-        $('#imageTableTitle').text('Images — ' + name);
-
-        // Show images tab button
+        $('#imageTableTitle').text('Media — ' + name);
         $('#imagesTabBtn').show();
-
-        // Switch tabs
         $('#albumsTab').hide();
         $('#imagesTab').show();
         $('#imageFormContainer').hide();
         $('#newImageBtn').show();
 
-        // Init or reload image DataTable
         if (imageTable) {
             imageTable.ajax.url("{{ url('/admin/gallery') }}/" + id + "/images").load();
         } else {
             imageTable = $('#imageTable').DataTable({
-                processing: true,
-                serverSide: true,
+                processing: true, serverSide: true,
                 ajax: "{{ url('/admin/gallery') }}/" + id + "/images",
                 columns: [
-                    { data: 'DT_RowIndex', orderable: false, searchable: false },
-                    { data: 'preview',     orderable: false, searchable: false },
-                    { data: 'title',       defaultContent: '<span class="text-muted">—</span>' },
+                    { data: 'DT_RowIndex',  orderable: false, searchable: false },
+                    { data: 'preview',      orderable: false, searchable: false },
+                    { data: 'type_badge',   orderable: false, searchable: false },
+                    { data: 'title',        defaultContent: '<span class="text-muted">—</span>' },
                     { data: 'order_by' },
-                    { data: 'action',      orderable: false, searchable: false }
+                    { data: 'action',       orderable: false, searchable: false }
                 ]
             });
         }
     }
 
-    // ── Back to Albums ───────────────────────────────
     $('#backToAlbums').click(function () {
         $('#imagesTab').hide();
         $('#albumsTab').show();
@@ -240,15 +246,11 @@ $(function () {
         albumTable.ajax.reload(null, false);
     });
 
-    // ── Manage Images button in album table ──────────
     $(document).on('click', '.ManageBtn', function () {
         openAlbum($(this).data('id'), $(this).data('name'));
     });
 
-    // ════════════════════════════════════════════════
-    // ALBUM CRUD
-    // ════════════════════════════════════════════════
-
+    // ── Album CRUD ───────────────────────────────────
     $('#newAlbumBtn').click(function () {
         $('#albumForm')[0].reset();
         $('#albumId').val('');
@@ -267,8 +269,7 @@ $(function () {
         var isCreate = $(this).val() === 'Create';
         var url = isCreate ? "{{ route('gallery.album.store') }}" : "{{ route('gallery.album.update') }}";
         $.ajax({
-            url: url, type: 'POST',
-            data: $('#albumForm').serialize(),
+            url: url, type: 'POST', data: $('#albumForm').serialize(),
             success: function (res) {
                 showSuccess(res.message);
                 $('#albumFormContainer').hide();
@@ -293,12 +294,7 @@ $(function () {
         $('#newAlbumBtn').hide();
     });
 
-
-
-    // ════════════════════════════════════════════════
-    // IMAGE CRUD
-    // ════════════════════════════════════════════════
-
+    // ── Media CRUD ───────────────────────────────────
     $('#newImageBtn').click(function () {
         $('#imageForm')[0].reset();
         $('#imageId').val('');
@@ -306,7 +302,7 @@ $(function () {
         $('#singlePreview').html('');
         $('#multiUploadBox').show();
         $('#singleUploadBox').hide();
-        $('#imageFormTitle').text('Upload Images');
+        $('#imageFormTitle').text('Upload Media');
         $('#saveImageBtn').val('Create').text('Upload');
         $('#imageFormContainer').show(300);
         $(this).hide();
@@ -317,48 +313,54 @@ $(function () {
         $('#newImageBtn').show();
     });
 
-    // Multiple image preview
-    $('#imagesInput').on('change', function () {
+    // ── Multi-file preview (images + videos) ─────────
+    $('#filesInput').on('change', function () {
         $('#multiPreview').html('');
         Array.from(this.files).forEach(function (file, index) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#multiPreview').append(`
-                    <div style="width:140px;">
-                        <img src="${e.target.result}" 
-                            style="width:140px; height:110px; object-fit:cover; border-radius:8px; border:2px solid #dee2e6;">
-                        <textarea name="captions[]" 
-          class="form-control form-control-sm mt-1" 
-          placeholder="Caption (optional)"
-          rows="2"
-          style="font-size:0.78rem; resize:none;"></textarea>
-                    </div>
-                `);
-            };
-            reader.readAsDataURL(file);
+            var isVideo = file.type.startsWith('video/');
+            var url = URL.createObjectURL(file);
+
+            var mediaTag = isVideo
+                ? `<video src="${url}" style="width:140px;height:110px;object-fit:cover;border-radius:8px;border:2px solid #dee2e6;" muted playsinline></video>`
+                : `<img src="${url}" style="width:140px;height:110px;object-fit:cover;border-radius:8px;border:2px solid #dee2e6;">`;
+
+            var badge = isVideo
+                ? `<span class="badge bg-primary mb-1"><i class="ri-video-line"></i> Video</span>`
+                : `<span class="badge bg-success mb-1"><i class="ri-image-line"></i> Image</span>`;
+
+            $('#multiPreview').append(`
+                <div style="width:140px;">
+                    ${badge}
+                    ${mediaTag}
+                    <textarea name="captions[]" class="form-control form-control-sm mt-1"
+                        placeholder="Caption (optional)" rows="2"
+                        style="font-size:0.78rem;resize:none;"></textarea>
+                </div>
+            `);
         });
     });
 
-    // Single image preview (edit mode)
-    $('#singleImageInput').on('change', function () {
+    // ── Single file preview (edit mode) ─────────────
+    $('#singleFileInput').on('change', function () {
         var file = this.files[0];
         if (!file) return;
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#singlePreview').html('<img src="' + e.target.result + '" width="120" class="img-thumbnail mt-1">');
-        };
-        reader.readAsDataURL(file);
+        var url = URL.createObjectURL(file);
+        var isVideo = file.type.startsWith('video/');
+        var tag = isVideo
+            ? `<video src="${url}" width="160" class="img-thumbnail mt-1" controls muted></video>`
+            : `<img src="${url}" width="160" class="img-thumbnail mt-1">`;
+        $('#singlePreview').html(tag);
     });
 
-    // Save images (upload or update)
+    // ── Save media ───────────────────────────────────
     $('#saveImageBtn').click(function () {
         var isCreate = $(this).val() === 'Create';
         var url = isCreate ? "{{ route('gallery.store') }}" : "{{ route('gallery.update') }}";
         var fd = new FormData(document.getElementById('imageForm'));
 
         $.ajax({
-            url: url, type: 'POST',
-            data: fd, contentType: false, processData: false,
+            url: url, type: 'POST', data: fd,
+            contentType: false, processData: false,
             success: function (res) {
                 showSuccess(res.message);
                 $('#imageFormContainer').hide();
@@ -373,26 +375,31 @@ $(function () {
         });
     });
 
-    // Edit image
+    // ── Edit media ───────────────────────────────────
     $(document).on('click', '.EditImageBtn', function () {
         var btn = $(this);
+        var type = btn.data('type');  // 'image' or 'video'
         $('#imageId').val(btn.data('id'));
         $('#imageTitle').val(btn.data('title'));
         $('#imageOrder').val(btn.data('order'));
         $('#multiUploadBox').hide();
         $('#singleUploadBox').show();
-        $('#singlePreview').html(
-            '<img src="/' + btn.data('image') + '" width="120" class="img-thumbnail mt-1">'
-        );
-        $('#imageFormTitle').text('Edit Image');
-        $('#saveImageBtn').val('Update').text('Update Image');
+
+        var currentSrc = '/' + btn.data('image');
+        var preview = type === 'video'
+            ? `<video src="${currentSrc}" width="160" class="img-thumbnail mt-1" controls muted></video>`
+            : `<img src="${currentSrc}" width="160" class="img-thumbnail mt-1">`;
+        $('#singlePreview').html(preview);
+
+        $('#imageFormTitle').text('Edit Media');
+        $('#saveImageBtn').val('Update').text('Update');
         $('#imageFormContainer').show(300);
         $('#newImageBtn').hide();
     });
 
-    // Delete image
+    // ── Delete media ─────────────────────────────────
     $(document).on('click', '.deleteImageBtn', function () {
-        if (!confirm('Delete this image?')) return;
+        if (!confirm('Delete this file?')) return;
         $.ajax({
             url: $(this).data('delete-url'), type: 'DELETE',
             success: function (res) {

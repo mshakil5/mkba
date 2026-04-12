@@ -61,7 +61,7 @@
         <div class="row pt-4 align-items-center">
             <div class="col-md-6 text-center text-md-start">
                 {{-- Dynamic Copyright --}}
-                <p class="small opacity-50 mb-0">&copy; {{ date('Y') }} {{ $company->copyright }}.</p>
+                <p class="small opacity-50 mb-0">&copy;{!! $company->copyright !!}</p>
             </div>
             <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
                 {{-- Dynamic Social Links --}}

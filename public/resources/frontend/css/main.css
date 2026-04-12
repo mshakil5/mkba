@@ -13,6 +13,7 @@
             --mkba-white:    #ffffff;
             --mkba-dur:      750ms;
             --mkba-ease:     cubic-bezier(0.76, 0, 0.24, 1);
+            --mkba-green: #089544;
         }
 
         body {
@@ -299,6 +300,7 @@
             line-height: 1.12;
             margin-bottom: 1rem;
             text-shadow: 0 2px 24px rgba(0,0,0,0.45);
+            color: var(--mkba-green);
         }
         
         .mkba-slide__subtitle {

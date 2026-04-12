@@ -169,6 +169,13 @@
                     </a>
                 </li>
                 
+                <li class="nav-item">
+                    <a href="{{ route('stats.index') }}" class="nav-link {{ Route::is('stats.index') ? 'active' : '' }}">
+                        <i class="ri-user-3-line"></i>
+                        <span>Stats</span>
+                    </a>
+                </li>
+                
                 
                 
                 <li class="nav-item">
@@ -192,6 +199,7 @@
                         'sections.index',
                         'timeline.index',
                         'allslider',
+                        'stats.index',
                         'banner-section.index',
                         'admin.home-footer',
                         'admin.copyright'
