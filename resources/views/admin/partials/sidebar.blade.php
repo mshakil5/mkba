@@ -178,7 +178,7 @@
                 
                 
                 
-                <li class="nav-item">
+                <li class="nav-item d-none">
                     <a href="{{ route('activity.index') }}" class="nav-link {{ Route::is('activity.index') ? 'active' : '' }}">
                         <i class="ri-user-3-line"></i>
                         <span>Activity</span>

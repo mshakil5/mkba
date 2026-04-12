@@ -37,6 +37,7 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'event_date' => 'required|date',
+            'order_by'   => 'nullable|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 

@@ -31,11 +31,10 @@ class FrontendController extends Controller
     public function index()
     {
         $about = About::first();
-        $activities = Event::latest()->take(6)->get();
+        $activities = Event::orderBy('order_by', 'asc')->take(6)->get();
         
-        $events = Event::where('status', 'Upcoming')
-                ->whereDate('event_date', '>=', Carbon::today())
-                ->latest()
+        $events = Event::whereDate('event_date', '>=', Carbon::today())
+                ->orderBy('order_by', 'asc')
                 ->take(6)
                 ->get();
 
@@ -90,7 +89,7 @@ class FrontendController extends Controller
             $query->where('status', $request->status); 
         }
 
-        $events = $query->latest()->paginate(9);
+        $events = $query->orderBy('order_by', 'asc')->paginate(9);
 
         $banner = BannerSection::where('page', 'Event')->first() ?? new BannerSection();
 
@@ -101,7 +100,7 @@ class FrontendController extends Controller
     public function eventDetail($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
-        $relatedEvents = Event::where('slug', '!=', $slug)->latest()->take(3)->get();
+        $relatedEvents = Event::where('slug', '!=', $slug)->orderBy('order_by', 'asc')->take(3)->get();
 
         
         return view('frontend.event_details', compact('event', 'relatedEvents'));

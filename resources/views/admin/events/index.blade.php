@@ -27,7 +27,7 @@
                                     <label class="form-label">Event Title <span class="text-danger">*</span></label>
                                     <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Pohela Boishakh 2026">
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     <label class="form-label">Category</label>
                                     <input type="text" id="category" name="category" class="form-control" placeholder="e.g. Cultural">
                                 </div>
@@ -38,6 +38,11 @@
                                         <option value="Ongoing">Ongoing</option>
                                         <option value="Past">Past</option>
                                     </select>
+                                </div>
+                                
+                                <div class="col-md-1 mb-3">
+                                    <label>Display Order</label>
+                                    <input type="number" id="order_by" name="order_by" class="form-control" value="0">
                                 </div>
                             </div>
 
@@ -223,6 +228,7 @@
                     $('#title').val(res.title);
                     $('#category').val(res.category);
                     $('#status').val(res.status);
+                    $('#order_by').val(res.order_by);
                     $('#event_date').val(res.event_date);
                     $('#start_time').val(res.start_time);
                     $('#end_time').val(res.end_time);

@@ -11,7 +11,7 @@ class Event extends Model
         'title', 'slug', 'category', 'status', 'image', 
         'event_date', 'start_time', 'end_time', 'location', 
         'description', 'meta_title', 'meta_description', 'meta_keywords',
-        'created_by', 'updated_by'
+        'created_by', 'updated_by', 'order_by'
     ];
 
     // Auto-generate slug when title is set
