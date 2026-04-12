@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Mail\ContactMail;
-use Illuminate\Http\Request;
-use App\Models\About;
-use App\Models\Timeline;
-use App\Models\Gallery;
-use App\Models\Trustee;
-use App\Models\Blog;
-// Assuming you have these models from previous steps
-use App\Models\Event; 
-use App\Models\Activity;
-use App\Models\BannerSection;
-use App\Models\Category;
-use App\Models\Contact;
-use Illuminate\Support\Facades\Mail;
-use App\Models\FaqQuestion;
-use Illuminate\Support\Facades\Cache;
-use App\Models\CompanyDetails;
-use App\Models\ContactEmail;
-use App\Models\Mission;
-use App\Models\Slider;
-use Carbon\Carbon;
+    use App\Mail\ContactMail;
+    use Illuminate\Http\Request;
+    use App\Models\About;
+    use App\Models\Timeline;
+    use App\Models\Gallery;
+    use App\Models\Trustee;
+    use App\Models\Blog;
+    use App\Models\Event; 
+    use App\Models\Activity;
+    use App\Models\BannerSection;
+    use App\Models\Category;
+    use App\Models\Contact;
+    use Illuminate\Support\Facades\Mail;
+
+    use Illuminate\Support\Facades\Log;
+    use App\Models\FaqQuestion;
+    use Illuminate\Support\Facades\Cache;
+    use App\Models\CompanyDetails;
+    use App\Models\ContactEmail;
+    use App\Models\Mission;
+    use App\Models\Slider;
+    use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
@@ -141,28 +142,47 @@ class FrontendController extends Controller
     }
 
 
+
     public function storeContact(Request $request)
     {
         $request->validate([
             'name'    => 'required|string|min:2|max:100',
             'email'   => 'required|email|max:50',
-            'phone' => 'required|string|min:8|max:20',
+            'phone'   => 'required|string|min:8|max:20',
             'company' => 'nullable|string|max:100',
             'message' => 'required|string|max:2000',
         ]);
 
         $contact = new Contact();
-        $contact->first_name    = $request->input('name');
-        $contact->email   = $request->input('email');
-        $contact->phone   = $request->input('phone');
-        $contact->company = $request->input('company');
-        $contact->message = $request->input('message');
+        $contact->first_name = $request->input('name');
+        $contact->email      = $request->input('email');
+        $contact->phone      = $request->input('phone');
+        $contact->company    = $request->input('company');
+        $contact->message    = $request->input('message');
         $contact->save();
 
         $contactEmails = ContactEmail::where('status', 1)->pluck('email');
 
         foreach ($contactEmails as $contactEmail) {
-            Mail::to($contactEmail)->send(new ContactMail($contact));
+            try {
+                Mail::to($contactEmail)->send(new ContactMail($contact));
+
+                // ✅ Success Log
+                Log::info('Contact mail sent successfully', [
+                    'to' => $contactEmail,
+                    'contact_id' => $contact->id,
+                    'sender_email' => $contact->email,
+                ]);
+
+            } catch (\Exception $e) {
+
+                // ❌ Error Log
+                Log::error('Contact mail failed', [
+                    'to' => $contactEmail,
+                    'contact_id' => $contact->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
 
         return back()->with('success', 'Your message has been sent successfully!');
